@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mit-xpro-319116": {
+      "hosting": {
+        "final-bad-bank": [
+          "mit-xpro-319116"
+        ]
+      }
+    }
+  }
+}
