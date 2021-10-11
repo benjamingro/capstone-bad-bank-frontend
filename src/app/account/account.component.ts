@@ -85,6 +85,19 @@ export class AccountComponent implements OnInit {
         )
         .subscribe((isLoggedIn) => {
           this.isLoggedIn = isLoggedIn;
+          // get user data 
+          if(isLoggedIn){
+            badBankService.getUserAccount_Authenticated_Observable().subscribe(
+              (response:any)=>{
+                this.busy=false; 
+
+              },(error:any)=>{
+                this.busy=false;
+                // sql error need to handle here , general error should work
+                console.log(error); 
+              });
+          }
+          
         });
     }
 
@@ -233,7 +246,7 @@ export class AccountComponent implements OnInit {
 
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
-          this.busy = false;
+          // this.busy = false;
           this.signInWithMyEmail_State = false;
         })
         .catch((error) => {

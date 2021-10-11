@@ -251,7 +251,7 @@
                 </div>
                 <div class="row w-100 mb-4">
                     <div class="col d-flex">
-                         You can get started with a ${{badBankService.badBankUser?.AccountBalance}} account balance as a welcome gift. 
+                         You can get started with a ${{badBankService.badBankUser?.AccountBalance | currency}} account balance as a welcome gift. 
                          <!-- You can get started with a ${{badBankUser?.AccountBalance}} account balance as a welcome gift.  -->
 
                     </div>
@@ -275,25 +275,20 @@
                 Welcome {{badBankService.badBankUser?.Fname}}
             </div>
             <div class="card-body">
-                <p class="card-text mb-4">Account balance: <b>{{badBankService.badBankUser?.AccountBalance}}</b></p>
-
-                <p>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                      Link with href
-                    </a>
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                      Button with data-bs-target
-                    </button>
-                  </p>
-                  <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                    </div>
-                  </div>
+                <p class="card-text mb-4">Account balance: {{badBankService.badBankUser?.AccountBalance | currency}}</p>
+                
+                <app-transaction-history></app-transaction-history>
+        
 
                   
                 <div class="row w-100">
-                    <div class="col d-flex justify-content-center">
+                    <div class="col d-flex justify-content-center py-1">
+                        <button class="btn btn-secondary" >Withdraw</button>
+                    </div>
+                    <div class="col d-flex justify-content-center py-1">
+                        <button class="btn btn-secondary">Deposit</button>
+                    </div>
+                    <div class="col d-flex justify-content-center py-1">
                         <button class="btn btn-secondary" (click)="mySignOut()">Log out</button>
                     </div>
                 </div>

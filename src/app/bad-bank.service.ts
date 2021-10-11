@@ -125,6 +125,52 @@ export class BadBankService {
     ;
   }
 
+  public getUserAccount_Authenticated_Observable() : Observable<HttpResponse<Object>> {
+
+    // console.log(`id_token = ${id_token}`); 
+    console.log(`this.id_token = ${this.id_token}`); 
+    // let my_id_token : string; 
+    // this.id_token?my_id_token=this.id_token:my_id_token=id_token;
+    // let id_token? = id_token; 
+    // if(id_token == ""){
+    //   id_token = this.id_token; 
+    // }
+
+    const url = `http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`;
+    // const url = "http://localhost:5001/mit-xpro-319116/us-central1/authRoute";
+        // const url = `http://localhost:5002/mit-xpro-319116/us-central1/authRoute`;
+
+    const httpOptions : Object = { 
+      responseType:'text',
+    };  
+
+    const requestObject = {
+      id_token:this.id_token,
+    }
+
+    let body : string = JSON.stringify(requestObject); 
+
+    console.log(`sending body = ${body}`);
+    
+    return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
+    .pipe(
+      catchError(error =>{return of(error);}),
+      tap((results:any)=>{
+        console.log(`inside tap, results=`); 
+        console.log(results); 
+
+        try{
+          this.badBankUser = JSON.parse(results);
+        }
+        catch(error){
+          // this is not a good place to store error string 
+          this.badBankUser = results; 
+        }
+         
+      })
+    );
+    
+  }
 
 
 }
