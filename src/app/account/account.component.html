@@ -272,26 +272,34 @@
     <div class="col-lg-6 pt-4" *ngIf="isLoggedIn && !createAccountFromScratchSuccess_State">
         <div class="card">
             <div class="card-header">
-                Welcome {{badBankService.badBankUser?.Fname}}
+                <div class="row  w-100">
+                    <div class="col align-self-center" style="font-weight: bold; font-size: 1.3rem;">
+                        Welcome {{badBankService.badBankUser?.Fname}}
+                    </div>
+                    <div class="col d-flex justify-content-end align-self-center">
+                        <span>Account balance</span>&nbsp;<span style="font-weight:bold;">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
-                <p class="card-text mb-4">Account balance: {{badBankService.badBankUser?.AccountBalance | currency}}</p>
-                
-                <app-transaction-history></app-transaction-history>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a routerLink="/deposit">Deposit</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a routerLink="/withdraw">Withdraw</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a>View transactions</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a (click)="mySignOut()" class="lookAlike">Logout</a>
+                    </li>
+                </ul>
         
 
                   
-                <div class="row w-100">
-                    <div class="col d-flex justify-content-center py-1">
-                        <button class="btn btn-secondary" >Withdraw</button>
-                    </div>
-                    <div class="col d-flex justify-content-center py-1">
-                        <button class="btn btn-secondary">Deposit</button>
-                    </div>
-                    <div class="col d-flex justify-content-center py-1">
-                        <button class="btn btn-secondary" (click)="mySignOut()">Log out</button>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

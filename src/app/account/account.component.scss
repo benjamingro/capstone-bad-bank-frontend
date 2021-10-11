@@ -1,3 +1,15 @@
 label{
     font-size:small;
 }
+
+a{
+    color:#007bff;
+    text-decoration:none; 
+    background-color:transparent;
+}
+a.lookAlike{
+    color:#007bff;
+    text-decoration:none; 
+    background-color:transparent;
+    cursor:pointer;
+}
