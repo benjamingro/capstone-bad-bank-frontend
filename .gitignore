@@ -43,3 +43,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Project Files
+.firebaserc
+.editorconfig
+package.json
+package-lock.json

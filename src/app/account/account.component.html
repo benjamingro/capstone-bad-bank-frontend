@@ -2,112 +2,306 @@
 
 <div class="row w-100">
     <div class="col-lg-3"></div>
-    <div class="col-lg-6 pt-4">
+
+    <!-- #region initial log in screen -->
+    <div class="col-lg-6 pt-4" *ngIf="!isLoggedIn && !createAccountFromScratch_State && !signInWithMyEmail_State">
         <div class="card">
-            <div class="card-header">Login</div>
             <div class="card-body">
-                <form class="needs-validation" novalidate [formGroup]="basicForm" (ngSubmit)="onSubmit()" >
-                    <!-- #region email password input row -->
-                    <input type="email" class="form-control" id="validationCustom01" placeholder="Email" formControlName="email" required>
+                <div class="row w-100 mb-4">
+                    <div class="col-lg-6 py-2 d-flex justify-content-center">
+                        <!-- sign in with email -->
+                        <button class="btn btn-secondary me-3 my-1" style="min-width:180px; "
+                            (click)="signInWithMyEmail_State = true">
+                            <fa-icon [icon]="faEnvelope" style="" class="ms-1 me-2"></fa-icon>Sign in with email
+                        </button>
+                    </div>
+                    <div class="col-lg-6 py-2 d-flex justify-content-center">
+                        <!-- sign in with google -->
+                        <button class="btn btn-secondary my-1" (click)="signInWithGoogle_submit()">
+                            <fa-icon [icon]="faGoogle" style="" class="ms-1 me-2"></fa-icon>Sign in
+                            with&nbsp;<b>Google</b>
+                        </button>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col d-flex justify-content-center">
+                        <!-- Create account -->
+                        <button type="button" class="btn btn-link" (click)="createAccountFromScratch_initial()">Create
+                            new account</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region create account from scratch screen -->
+    <div class="col-lg-6 pt-4" *ngIf="!isLoggedIn && createAccountFromScratch_State && !createAccountFromScratchSuccess_State && !busy">
+        <div class="card">
+            <div class="card-header">
+                Create an account
+            </div>
+            <div class="card-body">
+                <form class="needs-validation" novalidate [formGroup]="createAccountFromScratch_Form"
+                    (ngSubmit)="onSubmit()">
+                    <!-- #region first name last name -->
+                    <label class="text-secondary">First name</label>
+                    <input type="text" class="form-control" placeholder="First name"
+                        formControlName="firstName" required >
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="email?.invalid && submitted">
-                            Email is required
+                        <div class="col text-danger" *ngIf="firstName?.invalid && createAccountFromScratch_Form_submitted">
+                            First name is required
                         </div>
-                        <div class="col" *ngIf="(email?.valid && submitted) || !submitted">
-                            &nbsp; 
+                        <div class="col" *ngIf="(firstName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                            &nbsp;
                         </div>
                     </div>
-                    
-                    <input type="text" class="form-control" id="validationCustom02" placeholder="Password" formControlName="password" required>
+
+                    <label class="text-secondary">Last name</label>
+                    <input type="text" class="form-control" placeholder="Last name"
+                        formControlName="lastName" required>
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="password?.invalid && submitted">
-                            Password is required
+                        <div class="col text-danger" *ngIf="lastName?.invalid && createAccountFromScratch_Form_submitted">
+                            Last name is required
                         </div>
-                        <div class="col" *ngIf="(password?.valid && submitted) || !submitted">
-                            &nbsp; 
+                        <div class="col" *ngIf="(lastName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                            &nbsp;
                         </div>
                     </div>
                     <!-- #endregion -->
 
                     <!-- #region email password input row -->
-                    <!-- <div class="row" *ngIf="showLoginButton">
-                        <div class="col-6 mb-1">
-                            <label for="validationCustom01">Email</label>
-                            <input type="text" class="form-control" id="validationCustom01" placeholder="Email"
-                                formControlName="email" required>
-                            <div class="text-danger  ps-1" *ngIf="email?.invalid && submitted">
-                                Email is required
-                            </div>
-                            <div class="text-danger  ps-1" *ngIf="(email?.valid && submitted) || !submitted">
-                                &nbsp;
-                            </div>
+                    <label class="text-secondary">Email</label>
+                    <input type="email" class="form-control" id="validationCustom01" placeholder="Email"
+                        formControlName="email" required>
+                    <div class="row w-100">
+                        <div class="col text-danger" *ngIf="email?.invalid && createAccountFromScratch_Form_submitted">
+                            Email is required
                         </div>
+                        <div class="col" *ngIf="(email?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                            &nbsp;
+                        </div>
+                    </div>
 
-                        <div class="col-6 mb-1">
-                            <label for="validationCustom01">Password</label>
-                            <input type="text" class="form-control" id="validationCustom02" placeholder="Password"
-                                formControlName="password" required>
-                            <div class="text-danger  ps-1" *ngIf="password?.invalid && submitted">
-                                Password is required
-                            </div>
-                            <div class="text-danger  ps-1" *ngIf="(password?.valid && submitted) || !submitted">
-                                &nbsp;
-                            </div>
+                    <label class="text-secondary">Password</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Password"
+                        formControlName="password" required>
+                    <div class="row w-100">
+                        <div class="col text-danger" *ngIf="password?.invalid && createAccountFromScratch_Form_submitted">
+                            Password is required
                         </div>
-                    </div> -->
+                        <div class="col" *ngIf="(password?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!-- #endregion -->
+
+                    <!-- #region telephone number -->
+                    <label class="text-secondary">Telephone number</label>
+                    <input type="tel" class="form-control" placeholder="Telephone number (optional)"
+                        formControlName="telephone">
+                    <div class="row w-100">
+                        <div class="col" >
+                            &nbsp;
+                        </div>
+                    </div>
                     <!-- #endregion -->
 
                     <!-- #region login error row -->
                     <div class="row mb-2">
                         <div class="col" *ngIf="error_firebaseAuth==''">&nbsp;</div>
                         <div class="col " *ngIf="error_firebaseAuth=='auth/user-not-found'">
-                            <span class="text-danger">User not found. </span>Create account. 
+                            <span class="text-danger">User not found. </span>Create account.
                         </div>
                         <div class="col " *ngIf="error_firebaseAuth=='auth/email-already-in-use'">
-                            <span class="text-danger">Email address already in use.</span> 
+                            <span class="text-danger">Email address already in use.</span>
+                        </div>
+                        <div class="col " *ngIf="error_firebaseAuth=='auth/invalid-email'">
+                            <span class="text-danger">Invalid email address.</span>
                         </div>
                         <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
-                            <span class="text-danger">Password is too weak</span> 
+                            <span class="text-danger">Password is too weak</span>
                         </div>
-                        <div class="col " *ngIf="welcomeMessage!='' && error_firebaseAuth==''">
-                            <span class="text-success">{{welcomeMessage}}</span> 
-                        </div>
+                        
                     </div>
                     <!-- #endregion -->
 
-                    <!-- #region new button row -->
-                    <button class="btn btn-primary me-3 my-1" style="min-width:180px; " (click)="loginWithEmailAndPassword()">Log in</button>
-                    <button class="btn btn-primary my-1"><fa-icon [icon]="faGoogle" style="" class="ms-1 me-2"></fa-icon>Sign in with&nbsp;<b>Google</b></button>
-
-                    <!-- #endregion -->
-
                     <!-- #region button row -->
-                    <!-- <div class="row">
-                        <div class="col-4">
-                            <button class="btn btn-secondary" (click)="loginWithEmailAndPassword()"
-                                *ngIf="showLoginButton">Sign in with email</button>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-secondary" *ngIf="showLoginButton" (click)="my_createUserWithEmailAndPassword()" >
+                    <div class="row w-100">
+                        <div class="col-lg-6 my-2 d-flex justify-content-center">
+                            <button class="btn btn-primary" (click)="createAccountFromScratch_submit()">
                                 Create account
                             </button>
                         </div>
-                        <div class="col-4">
-                            <button class="btn btn-primary" (click)="login()" *ngIf="showLoginButton">
-                                <fa-icon [icon]="faGoogle" style="" class="ms-1 me-2"></fa-icon>Sign in with
-                                <b>Google</b>
+                        <div class="col-lg-6 my-2 d-flex justify-content-center">
+                            <button class="btn btn-secondary" (click)="createAccountFromScratch_cancel()">
+                                Cancel
                             </button>
-                            <button class="btn btn-secondary" (click)="logout()" *ngIf="showLogoutButton">Log
-                                out</button>
                         </div>
-                    </div> -->
+
+                    </div>
                     <!-- #endregion -->
                 </form>
             </div>
         </div>
-        <div class="row w-100">
-            <div class="col"><button type="button" class="btn btn-link" (click)="my_createUserWithEmailAndPassword()">Create a new account</button></div>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region wait screen -->
+    <div class="col-lg-6 pt-4" *ngIf="busy">
+        <div class="card">
+            <div class="card-body">
+                <div class="row w-100 mb-5">
+                    <div class="col d-flex justify-content-center">
+                        <mat-spinner style="stroke:slateblue;"></mat-spinner>
+                    </div>
+                </div>
+                <div class="row w-100 mb-5">
+                    <div class="col d-flex justify-content-center text-secondary">
+                        Processing your request
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- #endregion -->
+
+
+    <!-- #region sign in with email screen -->
+    <div class="col-lg-6 pt-4" *ngIf="signInWithMyEmail_State !busy">
+        <div class="card">
+            <div class="card-header">
+                Sign in with email
+            </div>
+            <div class="card-body">
+                <form class="needs-validation" novalidate [formGroup]="signInWithEmailForm" (ngSubmit)="onSubmit()">
+                    <!-- #region email password input row -->
+                    <input type="email" class="form-control" id="validationCustom01" placeholder="Email"
+                        formControlName="email" required>
+                    <div class="row w-100">
+                        <div class="col text-danger" *ngIf="email_signInWithEmail?.invalid && signInWithEmailForm_submitted">
+                            Email is required
+                        </div>
+                        <div class="col" *ngIf="(email_signInWithEmail?.valid && signInWithEmailForm_submitted) || !signInWithEmailForm_submitted">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Password"
+                        formControlName="password" required>
+                    <div class="row w-100">
+                        <div class="col text-danger" *ngIf="password_signInWithEmail?.invalid && signInWithEmailForm_submitted">
+                            Password is required
+                        </div>
+                        <div class="col" *ngIf="(password_signInWithEmail?.valid && signInWithEmailForm_submitted) || !signInWithEmailForm_submitted">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!-- #endregion -->
+
+                    <!-- #region login error row -->
+                    <div class="row mb-2">
+                        <div class="col" *ngIf="error_firebaseAuth==''">&nbsp;</div>
+                        <div class="col " *ngIf="error_firebaseAuth=='auth/user-not-found'">
+                            <span class="text-danger">User not found. </span>Create account.
+                        </div>
+                        <div class="col " *ngIf="error_firebaseAuth=='auth/email-already-in-use'">
+                            <span class="text-danger">Email address already in use.</span>
+                        </div>
+                        <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
+                            <span class="text-danger">Password is too weak</span>
+                        </div>
+                        
+                    </div>
+                    <!-- #endregion -->
+
+                    <!-- #region new button row -->
+                    <button class="btn btn-primary me-3 my-1" style="min-width:180px; "
+                        (click)="signInWithEmail_submit()">Log in</button>
+                    <button class="btn btn-secondary my-1" (click)="signInWithMyEmail_State=false">
+                        Cancel
+                    </button>
+
+                    <!-- #endregion -->
+
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region create account from google screen -->
+
+    <!-- #endregion -->
+
+
+    <!-- #region create account success screen -->
+    <div class="col-lg-6 pt-4" *ngIf="createAccountFromScratchSuccess_State">
+        <div class="card">
+            <div class="card-body">
+                <div class="row w-100 mb-4">
+                    <div class="col ">
+                         Welcome {{badBankService.badBankUser?.Fname}} to Bad Bank
+                         <!-- Thank you {{badBankUser?.Fname}} -->
+
+                    </div>
+                    
+                </div>
+                <div class="row w-100 mb-4">
+                    <div class="col d-flex">
+                         You can get started with a ${{badBankService.badBankUser?.AccountBalance}} account balance as a welcome gift. 
+                         <!-- You can get started with a ${{badBankUser?.AccountBalance}} account balance as a welcome gift.  -->
+
+                    </div>
+                    
+                </div>
+                <div class="row w-100">
+                    <div class="col d-flex justify-content-center">
+                        <button class="btn btn-primary" style="min-width:80px;" (click)="createAccountFromScratchSuccess_ok()">Ok</button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+
+
+    <!-- #region general screen -->
+    <div class="col-lg-6 pt-4" *ngIf="isLoggedIn && !createAccountFromScratchSuccess_State">
+        <div class="card">
+            <div class="card-header">
+                Welcome {{badBankService.badBankUser?.Fname}}
+            </div>
+            <div class="card-body">
+                <p class="card-text mb-4">Account balance: <b>{{badBankService.badBankUser?.AccountBalance}}</b></p>
+
+                <p>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Link with href
+                    </a>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      Button with data-bs-target
+                    </button>
+                  </p>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                    </div>
+                  </div>
+
+                  
+                <div class="row w-100">
+                    <div class="col d-flex justify-content-center">
+                        <button class="btn btn-secondary" (click)="mySignOut()">Log out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- #endregion -->
+
     <div class="col-lg-3"></div>
 </div>
