@@ -23,6 +23,7 @@ import { AccountComponent } from './account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { BusyComponent } from './busy/busy.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
     DepositComponent,
     WithdrawComponent,
     AccountComponent,
-    TransactionHistoryComponent
+    TransactionHistoryComponent,
+    BusyComponent
   ],
   imports: [
     BrowserModule,

@@ -111,18 +111,7 @@ export class BadBankService {
         }
          
       })
-    )
-    // .subscribe(
-    //         (result : any) => {
-    //     console.log(`result=${result}`);
-    //   }
-    // )
-    // .pipe(
-    //   (result : any) => {
-    //     console.log(`result=${result}`);
-    //   }
-    // )
-    ;
+    );
   }
 
   public getUserAccount_Authenticated_Observable() : Observable<HttpResponse<Object>> {
@@ -170,6 +159,115 @@ export class BadBankService {
       })
     );
     
+  }
+
+  public deposit_Authenticated_Observable(amount:number) : Observable<HttpResponse<Object>> {
+    
+    const url = `http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`;
+
+    const httpOptions : Object = { 
+      responseType:'text',
+    };  
+
+    const requestObject = {
+      id_token:this.id_token,
+      amount:amount
+    }
+
+    let body : string = JSON.stringify(requestObject); 
+    console.log(`sending body = ${body}`);
+
+    return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
+    .pipe(
+      catchError(error =>{return of(error);}),
+      tap((results:any)=>{
+        console.log(`inside deposit tap, results=`); 
+        console.log(results); 
+
+        try{
+          this.badBankUser = JSON.parse(results);
+        }
+        catch(error){
+          // this is not a good place to store error string 
+          this.badBankUser = results; 
+        }
+         
+      })
+    );
+
+  }
+
+  public withdraw_Authenticated_Observable(amount:number) : Observable<HttpResponse<Object>> {
+    
+    const url = `http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`;
+
+    const httpOptions : Object = { 
+      responseType:'text',
+    };  
+
+    const requestObject = {
+      id_token:this.id_token,
+      amount:amount
+    }
+
+    let body : string = JSON.stringify(requestObject); 
+    console.log(`sending body = ${body}`);
+
+    return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
+    .pipe(
+      catchError(error =>{return of(error);}),
+      tap((results:any)=>{
+        console.log(`inside withdraw tap, results=`); 
+        console.log(results); 
+
+        try{
+          this.badBankUser = JSON.parse(results);
+        }
+        catch(error){
+          // this is not a good place to store error string 
+          this.badBankUser = results; 
+        }
+         
+      })
+    );
+
+  }
+
+  public createUserAccountWithGoogle_Authenticated_Observable(Fname:string,Lname:string,Telephone:string) : Observable<HttpResponse<Object>> {
+    const url = `http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`;
+    const httpOptions : Object = { 
+      responseType:'text',
+    };  
+
+    const requestObject = {
+      id_token:this.id_token,
+      Fname : Fname, 
+      Lname : Lname, 
+      Telephone : Telephone
+    }
+
+    let body : string = JSON.stringify(requestObject); 
+
+    console.log(`sending body = ${body}`);
+    
+    return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
+    .pipe(
+      catchError(error =>{return of(error);}),
+      tap((results:any)=>{
+        console.log(`inside google tap, results=`); 
+        console.log(results); 
+
+        try{
+          this.badBankUser = JSON.parse(results);
+        }
+        catch(error){
+          // this is not a good place to store error string 
+          this.badBankUser = results; 
+        }
+         
+      })
+    );
+
   }
 
 

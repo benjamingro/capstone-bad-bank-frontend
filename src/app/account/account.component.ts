@@ -1,7 +1,6 @@
 import { Component, OnInit, Optional } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-// import {MyAuthService} from '../my-auth.service';
 import {
   Auth,
   authState,
@@ -10,6 +9,7 @@ import {
   User,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   EmailAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -19,8 +19,7 @@ import { map } from 'rxjs/operators';
 import { traceUntilFirst } from '@angular/fire/performance';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-
-// import { BadBankUser } from '../bad-bank-types';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { BadBankService } from '../bad-bank.service';
 
@@ -33,9 +32,13 @@ export class AccountComponent implements OnInit {
   faGoogle = faGoogle;
   faEnvelope = faEnvelope;
 
+  faArrowLeft = faArrowLeft; 
+
   public submitted: boolean = false;
   public signInWithEmailForm_submitted: boolean = false;
   public createAccountFromScratch_Form_submitted: boolean = false;
+  public createAccountFromGoogle_Form_submitted: boolean = false;
+
 
   // public error_userNotFound : boolean = false;
   public error_firebaseAuth: string = '';
@@ -51,9 +54,13 @@ export class AccountComponent implements OnInit {
   public isLoggedIn: boolean = false;
 
   public createAccountFromScratch_State: boolean = false;
-  public createAccountFromScratchSuccess_State: boolean = false;
+  public createAccountSuccess_State: boolean = false;
+
+  public createAccountFromGoogle_State: boolean = false;
 
   public signInWithMyEmail_State: boolean = false;
+
+  public viewTransactionHistory_State : boolean = false; 
 
   public busy: boolean = false;
 
@@ -69,6 +76,12 @@ export class AccountComponent implements OnInit {
     lastName: new FormControl('', { validators: Validators.required }),
     email: new FormControl('', { validators: Validators.required }),
     password: new FormControl('', { validators: Validators.required }),
+    telephone: new FormControl(''),
+  });
+
+  createAccountFromGoogle_Form = new FormGroup({
+    firstName: new FormControl('', { validators: Validators.required }),
+    lastName: new FormControl('', { validators: Validators.required }),
     telephone: new FormControl(''),
   });
 
@@ -89,7 +102,11 @@ export class AccountComponent implements OnInit {
           if(isLoggedIn){
             badBankService.getUserAccount_Authenticated_Observable().subscribe(
               (response:any)=>{
-                this.busy=false; 
+                this.busy=false;
+                if(response === 'user_not_set_up'){
+                  this.createAccountFromGoogle_State = true; 
+                  console.log(`inside user_not_set_up, this.createAccountFromGoogle_State = true`);
+                } 
 
               },(error:any)=>{
                 this.busy=false;
@@ -113,6 +130,44 @@ export class AccountComponent implements OnInit {
 
   public async mySignOut() {
     return await signOut(this.auth);
+  }
+
+  public async createAccountFromGoogle_submit(){
+    if (
+      this.firstName_google?.valid &&
+      this.lastName_google?.valid
+    ) {
+      // form is validated
+      const firstName: string = this.firstName_google?.value;
+      const lastName: string = this.lastName_google?.value; 
+      const telephone: string = this.telephone_google?.value;
+      // call firebase here 
+      this.busy = true; 
+      this.badBankService.createUserAccountWithGoogle_Authenticated_Observable(firstName,lastName,telephone).subscribe(
+        (response:any)=>{
+          try{
+            response=JSON.parse(response);
+            this.createAccountSuccess_State = true;
+          }
+          catch(error){
+            // need to catch error here 
+          }
+          this.createAccountFromGoogle_State = false;  
+          this.busy = false;
+        },
+        (error:any)=>{
+          console.log(`error = ${JSON.stringify(error)}`);
+          this.busy = false;
+        }); 
+    }
+  }
+
+  public async createAccountFromGoogle_cancel() {
+    this.createAccountFromGoogle_State = false;
+    this.busy=true; 
+    await signOut(this.auth); 
+    this.busy=false; 
+     
   }
 
   public async createAccountFromScratch_submit() {
@@ -159,7 +214,7 @@ export class AccountComponent implements OnInit {
               (response: any) => {
                 try{
                   response=JSON.parse(response);
-                  this.createAccountFromScratchSuccess_State = true;
+                  this.createAccountSuccess_State = true;
                 }
                 catch(error){
                   // need to catch error here 
@@ -176,7 +231,7 @@ export class AccountComponent implements OnInit {
               }
             );
           // this.busy = false;
-          // this.createAccountFromScratchSuccess_State = true;
+          // this.createAccountSuccess_State = true;
         })
         .catch((error) => {
           this.busy = false;
@@ -189,7 +244,7 @@ export class AccountComponent implements OnInit {
     }
 
     // console.log('clicked createAccountFromScratch');
-    // this.createAccountFromScratchSuccess_State = true;
+    // this.createAccountSuccess_State = true;
   }
 
   public createAccountFromScratch_cancel(): void {
@@ -201,8 +256,8 @@ export class AccountComponent implements OnInit {
     this.createAccountFromScratch_State = true;
   }
 
-  public createAccountFromScratchSuccess_ok(): void {
-    this.createAccountFromScratchSuccess_State = false;
+  public createAccountSuccess_ok(): void {
+    this.createAccountSuccess_State = false;
   }
 
   // public signInWithMyEmail(): void {
@@ -222,6 +277,7 @@ export class AccountComponent implements OnInit {
   }
 
   public signInWithGoogle_submit(): void {
+
     signInWithPopup(this.auth, new GoogleAuthProvider())
       .then(() => {})
       .catch((error) => {
@@ -287,4 +343,16 @@ export class AccountComponent implements OnInit {
   get password_signInWithEmail() {
     return this.signInWithEmailForm.get('password');
   }
+
+  get firstName_google() {
+    return this.createAccountFromGoogle_Form.get('firstName');
+  }
+  get lastName_google() {
+    return this.createAccountFromGoogle_Form.get('lastName');
+  }
+  get telephone_google() {
+    return this.createAccountFromGoogle_Form.get('telephone');
+  }
+
+  
 }

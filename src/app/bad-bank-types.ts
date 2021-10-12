@@ -13,7 +13,10 @@ export type BadBankUser = {
     AccountNumber:number,
     TransactionTime:number,
     TransactionAmount:number,
-    Payee:string
+    Payee:string, 
+    AccountBalanceBefore:number,
+    AccountBalanceAfter:number,
+    
   }
 
-//   EATE TABLE TransactionsTable (AccountNumber INT, TransactionTime INT, TransactionAmount DECIMAL(15,2), Payee VARCHAR(100));
+//   CREATE TABLE TransactionsTable (AccountNumber INT, TransactionTime INT, TransactionAmount DECIMAL(15,2), Payee VARCHAR(100), AccountBalanceBefore DECIMAL(15,2),AccountBalanceAfter DECIMAL(15,2));

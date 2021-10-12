@@ -1,10 +1,7 @@
-<p>account works!</p>
-
-<div class="row w-100">
-    <div class="col-lg-3"></div>
-
-    <!-- #region initial log in screen -->
-    <div class="col-lg-6 pt-4" *ngIf="!isLoggedIn && !createAccountFromScratch_State && !signInWithMyEmail_State">
+<!-- #region initial log in screen -->
+<div class="row w-100" *ngIf="!isLoggedIn && !createAccountFromScratch_State && !signInWithMyEmail_State">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 pt-4">
         <div class="card">
             <div class="card-body">
                 <div class="row w-100 mb-4">
@@ -34,10 +31,17 @@
             </div>
         </div>
     </div>
-    <!-- #endregion -->
+    <div class="col-lg-4"></div>
+</div>
 
-    <!-- #region create account from scratch screen -->
-    <div class="col-lg-6 pt-4" *ngIf="!isLoggedIn && createAccountFromScratch_State && !createAccountFromScratchSuccess_State && !busy">
+
+<!-- #endregion -->
+
+<!-- #region create account from scratch screen -->
+<div class="row w-100"
+    *ngIf="!isLoggedIn && createAccountFromScratch_State && !createAccountSuccess_State && !busy">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 pt-4">
         <div class="card">
             <div class="card-header">
                 Create an account
@@ -47,25 +51,28 @@
                     (ngSubmit)="onSubmit()">
                     <!-- #region first name last name -->
                     <label class="text-secondary">First name</label>
-                    <input type="text" class="form-control" placeholder="First name"
-                        formControlName="firstName" required >
+                    <input type="text" class="form-control" placeholder="First name" formControlName="firstName"
+                        required>
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="firstName?.invalid && createAccountFromScratch_Form_submitted">
+                        <div class="col text-danger"
+                            *ngIf="firstName?.invalid && createAccountFromScratch_Form_submitted">
                             First name is required
                         </div>
-                        <div class="col" *ngIf="(firstName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                        <div class="col"
+                            *ngIf="(firstName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                             &nbsp;
                         </div>
                     </div>
 
                     <label class="text-secondary">Last name</label>
-                    <input type="text" class="form-control" placeholder="Last name"
-                        formControlName="lastName" required>
+                    <input type="text" class="form-control" placeholder="Last name" formControlName="lastName" required>
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="lastName?.invalid && createAccountFromScratch_Form_submitted">
+                        <div class="col text-danger"
+                            *ngIf="lastName?.invalid && createAccountFromScratch_Form_submitted">
                             Last name is required
                         </div>
-                        <div class="col" *ngIf="(lastName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                        <div class="col"
+                            *ngIf="(lastName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                             &nbsp;
                         </div>
                     </div>
@@ -79,7 +86,8 @@
                         <div class="col text-danger" *ngIf="email?.invalid && createAccountFromScratch_Form_submitted">
                             Email is required
                         </div>
-                        <div class="col" *ngIf="(email?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                        <div class="col"
+                            *ngIf="(email?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                             &nbsp;
                         </div>
                     </div>
@@ -88,10 +96,12 @@
                     <input type="text" class="form-control" id="validationCustom02" placeholder="Password"
                         formControlName="password" required>
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="password?.invalid && createAccountFromScratch_Form_submitted">
+                        <div class="col text-danger"
+                            *ngIf="password?.invalid && createAccountFromScratch_Form_submitted">
                             Password is required
                         </div>
-                        <div class="col" *ngIf="(password?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                        <div class="col"
+                            *ngIf="(password?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                             &nbsp;
                         </div>
                     </div>
@@ -102,7 +112,7 @@
                     <input type="tel" class="form-control" placeholder="Telephone number (optional)"
                         formControlName="telephone">
                     <div class="row w-100">
-                        <div class="col" >
+                        <div class="col">
                             &nbsp;
                         </div>
                     </div>
@@ -123,7 +133,7 @@
                         <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
                             <span class="text-danger">Password is too weak</span>
                         </div>
-                        
+
                     </div>
                     <!-- #endregion -->
 
@@ -146,33 +156,21 @@
             </div>
         </div>
     </div>
-    <!-- #endregion -->
+    <div class="col-lg-3"></div>
+</div>
+<!-- #endregion -->
 
-    <!-- #region wait screen -->
-    <div class="col-lg-6 pt-4" *ngIf="busy">
-        <div class="card">
-            <div class="card-body">
-                <div class="row w-100 mb-5">
-                    <div class="col d-flex justify-content-center">
-                        <mat-spinner style="stroke:slateblue;"></mat-spinner>
-                    </div>
-                </div>
-                <div class="row w-100 mb-5">
-                    <div class="col d-flex justify-content-center text-secondary">
-                        Processing your request
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- #endregion -->
+<!-- #region wait screen -->
+<app-busy *ngIf="busy"></app-busy>
+<!-- #endregion -->
 
-
-    <!-- #region sign in with email screen -->
-    <div class="col-lg-6 pt-4" *ngIf="signInWithMyEmail_State !busy">
+<!-- #region sign in with email screen -->
+<div class="row w-100" *ngIf="signInWithMyEmail_State && !busy">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 pt-4">
         <div class="card">
             <div class="card-header">
-                Sign in with email
+                <fa-icon [icon]="faEnvelope" style="" class="ms-1 me-2"></fa-icon>Sign in with email
             </div>
             <div class="card-body">
                 <form class="needs-validation" novalidate [formGroup]="signInWithEmailForm" (ngSubmit)="onSubmit()">
@@ -180,10 +178,12 @@
                     <input type="email" class="form-control" id="validationCustom01" placeholder="Email"
                         formControlName="email" required>
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="email_signInWithEmail?.invalid && signInWithEmailForm_submitted">
+                        <div class="col text-danger"
+                            *ngIf="email_signInWithEmail?.invalid && signInWithEmailForm_submitted">
                             Email is required
                         </div>
-                        <div class="col" *ngIf="(email_signInWithEmail?.valid && signInWithEmailForm_submitted) || !signInWithEmailForm_submitted">
+                        <div class="col"
+                            *ngIf="(email_signInWithEmail?.valid && signInWithEmailForm_submitted) || !signInWithEmailForm_submitted">
                             &nbsp;
                         </div>
                     </div>
@@ -191,10 +191,12 @@
                     <input type="text" class="form-control" id="validationCustom02" placeholder="Password"
                         formControlName="password" required>
                     <div class="row w-100">
-                        <div class="col text-danger" *ngIf="password_signInWithEmail?.invalid && signInWithEmailForm_submitted">
+                        <div class="col text-danger"
+                            *ngIf="password_signInWithEmail?.invalid && signInWithEmailForm_submitted">
                             Password is required
                         </div>
-                        <div class="col" *ngIf="(password_signInWithEmail?.valid && signInWithEmailForm_submitted) || !signInWithEmailForm_submitted">
+                        <div class="col"
+                            *ngIf="(password_signInWithEmail?.valid && signInWithEmailForm_submitted) || !signInWithEmailForm_submitted">
                             &nbsp;
                         </div>
                     </div>
@@ -212,7 +214,7 @@
                         <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
                             <span class="text-danger">Password is too weak</span>
                         </div>
-                        
+
                     </div>
                     <!-- #endregion -->
 
@@ -225,51 +227,131 @@
 
                     <!-- #endregion -->
 
-                    
+
                 </form>
             </div>
         </div>
     </div>
-    <!-- #endregion -->
+    <div class="col-lg-4"></div>
+</div>
+<!-- #endregion -->
 
-    <!-- #region create account from google screen -->
+<!-- #region create account from google screen -->
+<div class="row w-100"
+    *ngIf="isLoggedIn && createAccountFromGoogle_State && !createAccountSuccess_State && !busy">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 pt-4">
+        <div class="card">
+            <div class="card-header">
+                Create an account
+            </div>
+            <div class="card-body">
+                <form class="needs-validation" novalidate [formGroup]="createAccountFromGoogle_Form"
+                    (ngSubmit)="onSubmit()">
+                    <!-- #region first name last name -->
+                    <label class="text-secondary">First name</label>
+                    <input type="text" class="form-control" placeholder="First name" formControlName="firstName"
+                        required>
+                    <div class="row w-100">
+                        <div class="col text-danger"
+                            *ngIf="firstName_google?.invalid && createAccountFromGoogle_Form_submitted">
+                            First name is required
+                        </div>
+                        <div class="col"
+                            *ngIf="(firstName_google?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
+                            &nbsp;
+                        </div>
+                    </div>
 
-    <!-- #endregion -->
+                    <label class="text-secondary">Last name</label>
+                    <input type="text" class="form-control" placeholder="Last name" formControlName="lastName" required>
+                    <div class="row w-100">
+                        <div class="col text-danger"
+                            *ngIf="lastName_google?.invalid && createAccountFromGoogle_Form_submitted">
+                            Last name is required
+                        </div>
+                        <div class="col"
+                            *ngIf="(lastName_google?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!-- #endregion -->
+
+                    <!-- #region telephone number -->
+                    <label class="text-secondary">Telephone number</label>
+                    <input type="tel" class="form-control" placeholder="Telephone number (optional)"
+                        formControlName="telephone">
+                    <div class="row w-100">
+                        <div class="col">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!-- #endregion -->
+
+                    <!-- #region button row -->
+                    <div class="row w-100">
+                        <div class="col-lg-6 my-2 d-flex justify-content-center">
+                            <button class="btn btn-primary" (click)="createAccountFromGoogle_submit()">
+                                Create account
+                            </button>
+                        </div>
+                        <div class="col-lg-6 my-2 d-flex justify-content-center">
+                            <button class="btn btn-secondary" (click)="createAccountFromGoogle_cancel()">
+                                Cancel
+                            </button>
+                        </div>
+
+                    </div>
+                    <!-- #endregion -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3"></div>
+</div>
+<!-- #endregion -->
 
 
-    <!-- #region create account success screen -->
-    <div class="col-lg-6 pt-4" *ngIf="createAccountFromScratchSuccess_State">
+<!-- #region create account success screen -->
+<div class="row w-100" *ngIf="createAccountSuccess_State">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 pt-4">
         <div class="card">
             <div class="card-body">
                 <div class="row w-100 mb-4">
-                    <div class="col ">
-                         Welcome {{badBankService.badBankUser?.Fname}} to Bad Bank
-                         <!-- Thank you {{badBankUser?.Fname}} -->
+                    <div class="col " style="font-size:1.2rem; ">
+                        Welcome to Bad Bank, <span style="font-weight:bold;">{{badBankService.badBankUser?.Fname}}</span>.  
+                        <!-- Thank you {{badBankUser?.Fname}} -->
 
                     </div>
-                    
+
                 </div>
                 <div class="row w-100 mb-4">
                     <div class="col d-flex">
-                         You can get started with a ${{badBankService.badBankUser?.AccountBalance | currency}} account balance as a welcome gift. 
-                         <!-- You can get started with a ${{badBankUser?.AccountBalance}} account balance as a welcome gift.  -->
+                        You can get started with a {{badBankService.badBankUser?.AccountBalance | currency}} account
+                        balance as a welcome gift.
+                        <!-- You can get started with a ${{badBankUser?.AccountBalance}} account balance as a welcome gift.  -->
 
                     </div>
-                    
+
                 </div>
                 <div class="row w-100">
                     <div class="col d-flex justify-content-center">
-                        <button class="btn btn-primary" style="min-width:80px;" (click)="createAccountFromScratchSuccess_ok()">Ok</button> 
+                        <button class="btn btn-primary" style="min-width:80px;"
+                            (click)="createAccountSuccess_ok()">Ok</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- #endregion -->
+    <div class="col-lg-3"></div>
+</div>
+<!-- #endregion -->
 
-
-    <!-- #region general screen -->
-    <div class="col-lg-6 pt-4" *ngIf="isLoggedIn && !createAccountFromScratchSuccess_State">
+<!-- #region general screen -->
+<div class="row w-100" *ngIf="isLoggedIn && !createAccountSuccess_State && !viewTransactionHistory_State && !createAccountFromGoogle_State">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 pt-4">
         <div class="card">
             <div class="card-header">
                 <div class="row  w-100">
@@ -277,7 +359,8 @@
                         Welcome {{badBankService.badBankUser?.Fname}}
                     </div>
                     <div class="col d-flex justify-content-end align-self-center">
-                        <span>Account balance</span>&nbsp;<span style="font-weight:bold;">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
+                        <span>Account balance:</span>&nbsp;<span
+                            style="font-weight:bold;">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
                     </div>
                 </div>
             </div>
@@ -290,21 +373,72 @@
                         <a routerLink="/withdraw">Withdraw</a>
                     </li>
                     <li class="list-group-item">
-                        <a>View transactions</a>
+                        <a (click)="viewTransactionHistory_State=true" class="lookAlike">View transactions</a>
                     </li>
                     <li class="list-group-item">
                         <a (click)="mySignOut()" class="lookAlike">Logout</a>
                     </li>
                 </ul>
-        
 
-                  
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3"></div>
+</div>
+<!-- #endregion -->
+
+<!-- #region transaction history screen -->
+<div class="row w-100" *ngIf="viewTransactionHistory_State">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 pt-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="col align-self-center py-1" style="font-weight:bold;font-size:1.2rem;">Transaction history</div>
+                    <div class="col d-flex justify-content-center align-self-center py-1">
+                        Current balance:&nbsp;<b>{{badBankService.badBankUser?.AccountBalance | currency}}</b>
+                    </div>
+                    <div class="col d-flex justify-content-end align-self-center py-1">
+                        <a (click)="viewTransactionHistory_State=false" class="lookAlike" ><fa-icon [icon]="faArrowLeft" style="" class="ms-1 me-2"></fa-icon>&nbsp;&nbsp;Account</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Date
+                            </th>
+                            <th scope="col">
+                                Amount
+                            </th>
+                            <th scope="col">
+                                Payor/Payee
+                            </th>
+                            <th scope="col">
+                                Balance
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let transaction of badBankService.badBankUser?.TransactionHistory">
+                            <td scope="col">{{transaction.TransactionTime | date}}</td>
+                            <td scope="col">{{transaction.TransactionAmount | currency}}</td>
+                            <td scope="col">{{transaction.Payee}}</td>
+                            <td scope="col">{{transaction.AccountBalanceAfter | currency}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
                 
             </div>
         </div>
     </div>
-
-    <!-- #endregion -->
-
     <div class="col-lg-3"></div>
+
 </div>
+<!-- #endregion -->
