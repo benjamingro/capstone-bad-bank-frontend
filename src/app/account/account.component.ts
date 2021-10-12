@@ -106,6 +106,8 @@ export class AccountComponent implements OnInit {
                 if(response === 'user_not_set_up'){
                   this.createAccountFromGoogle_State = true; 
                   console.log(`inside user_not_set_up, this.createAccountFromGoogle_State = true`);
+                  console.log(`this.user = `); 
+                  console.log(JSON.stringify(this.user)); 
                 } 
 
               },(error:any)=>{
