@@ -21,7 +21,9 @@ export class WithdrawComponent implements OnInit {
       (control: AbstractControl) => Validators.max(this.badBankService.badBankUser!.AccountBalance)(control)
     ]),
   });
-  constructor(public badBankService: BadBankService) {}
+  constructor(public badBankService: BadBankService) {
+    
+  }
 
   ngOnInit(): void {}
 

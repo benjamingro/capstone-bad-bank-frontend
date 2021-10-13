@@ -1,7 +1,42 @@
+@font-face {
+    font-family: "Merriweather Sans";
+    src: local("Merriweather Sans"), url(./assets/fonts/Merriweather_Sans/MerriweatherSans-VariableFont_wght.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: local("Roboto"), url(./assets/fonts/Roboto/Roboto-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Lato";
+    src: local("Lato"), url(./assets/fonts/Lato/Lato-Regular.ttf) format("truetype");
+}
+
 /* You can add global styles to this file, and also import other style files */
 @import './node_modules/bootstrap/scss/bootstrap.scss';
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+    height: 100%; 
+    margin: 0; 
+}
+body { 
+    margin: 0; 
+    font-family: "Lato","Roboto", "Helvetica Neue", sans-serif !important; 
+}
+
+.wrapper {
+    min-height: 100%;
+  
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    margin-bottom: -60px;
+  }
+  .footer,
+  .push {
+    height: 60px;
+  }
+
+
 
 $xs: 0;
 $sm: 576px;

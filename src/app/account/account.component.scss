@@ -49,3 +49,9 @@ $xxl: 1400px;
         overflow-y:auto; 
     }
 }
+
+@media (min-width: $xs){
+    .smallDisappear{
+        display:none; 
+    }
+}
