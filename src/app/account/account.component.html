@@ -42,7 +42,7 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-6 pt-4 ps-4 pe-1">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-center" style="font-weight:bold;">
                 Create an account
             </div>
             <div class="card-body">
@@ -127,6 +127,14 @@
                         </div>
                         <div class="col-sm-3"></div>
 
+                    </div>
+                    <div class="row w-100 mt-2">
+                        <div class="col-1">
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-11">
+                            I agree to the Terms and Conditions 
+                        </div>
                     </div>
 
                     <!-- <label class="text-secondary">First name</label>
@@ -441,8 +449,8 @@
                         Welcome {{badBankService.badBankUser?.Fname}}
                     </div>
                     <div class="col d-flex justify-content-end align-self-center">
-                        <span>Account balance:</span>&nbsp;<span
-                            style="font-weight:bold;">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
+                        <span class="smallDisappear">Account balance:</span><span class="largeDisappear">Balance:</span>&nbsp;<span
+                            style="font-weight:bold;" class="align-self-center">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
                     </div>
                 </div>
             </div>

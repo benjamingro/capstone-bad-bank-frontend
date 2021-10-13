@@ -75,6 +75,7 @@ export class AccountComponent implements OnInit {
     lastName: new FormControl('', { validators: Validators.required }),
     email: new FormControl('', { validators: Validators.required }),
     password: new FormControl('', { validators: Validators.required }),
+    agree: new FormControl(false, { validators: Validators.required }),
     telephone: new FormControl(''),
   });
 

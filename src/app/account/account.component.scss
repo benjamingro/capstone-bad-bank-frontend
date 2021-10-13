@@ -55,3 +55,9 @@ $xxl: 1400px;
         display:none; 
     }
 }
+
+@media (max-width:$xs){
+    .largeDisappear{
+        display:none;
+    }
+}
