@@ -1,7 +1,7 @@
 <!-- #region withdraw screen -->
 <div class="row w-100" *ngIf="!busy_State && !withdrawSuccess_State">
     <div class="col-lg-4"></div>
-    <div class="col-lg-4 pt-4">
+    <div class="col-lg-4 pt-4 ps-4 pe-1">
         <div class="card">
             <div class="card-header d-flex justify-content-center">
                 <b>Withdraw</b>
@@ -45,10 +45,10 @@
                             </div>
                             <!-- buttons row -->
                             <div class="row w-100">
-                                <div class="col-lg-6 py-1 d-flex justify-content-center">
+                                <div class="col-sm-6 py-1 d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary" (click)="withdrawForm_submit()">Withdraw</button>
                                 </div>
-                                <div class="col-lg-6 py-1 d-flex justify-content-center">
+                                <div class="col-sm-6 py-1 d-flex justify-content-center">
                                     <a class="btn btn-secondary" routerLink="/account">Cancel</a>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
 <!-- #region withdraw success screen -->
 <div class="row w-100" *ngIf="!busy_State && withdrawSuccess_State">
     <div class="col-lg-4"></div>
-    <div class="col-lg-4 pt-4">
+    <div class="col-lg-4 pt-4 ps-4 pe-1">
         <div class="card">
             <div class="card-body">
                 <div class="row w-100 mb-4">

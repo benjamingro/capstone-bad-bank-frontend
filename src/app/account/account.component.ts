@@ -65,8 +65,6 @@ export class AccountComponent implements OnInit {
 
   public busy: boolean = false;
 
-
-
   signInWithEmailForm = new FormGroup({
     email: new FormControl('', { validators: Validators.required }),
     password: new FormControl('', { validators: Validators.required }),
@@ -93,15 +91,7 @@ export class AccountComponent implements OnInit {
     if (auth) {
       this.user = authState(this.auth);
       this.userDisposable = authState(this.auth)
-        // .pipe(
-        //   traceUntilFirst('auth'),
-        //   map((u) => !!u)
-        // )
-        // .subscribe((isLoggedIn) => {
           .subscribe((myUser) => {
-            // console.log('inside auth state change'); 
-            // console.log(`myUser = `); 
-            // console.log(JSON.stringify(myUser)); 
             if(myUser?.uid){
               this.isLoggedIn = true; 
               this.displayName = myUser.displayName!; 
@@ -109,11 +99,8 @@ export class AccountComponent implements OnInit {
             else{
               this.isLoggedIn = false; 
             }
-            console.log(`this.isLoggedIn = ${this.isLoggedIn}`); 
-          // this.isLoggedIn = isLoggedIn;
 
           // get user data 
-          // && !this.badBankService.badBankUser
           if(this.isLoggedIn && !this.badBankService.badBankUser){
             badBankService.getUserAccount_Authenticated_Observable().subscribe(
               (response:any)=>{
@@ -278,22 +265,6 @@ export class AccountComponent implements OnInit {
     this.createAccountSuccess_State = false;
   }
 
-  // public signInWithMyEmail(): void {
-  //   this.signInWithMyEmail_State = true;
-  // }
-
-  async login() {
-    return await signInWithPopup(this.auth, new GoogleAuthProvider());
-  }
-
-  // async loginAnonymously() {
-  //   return await signInAnonymously(this.auth);
-  // }
-
-  async logout() {
-    return await signOut(this.auth);
-  }
-
   public signInWithGoogle_submit(): void {
 
     signInWithPopup(this.auth, new GoogleAuthProvider())
@@ -309,8 +280,6 @@ export class AccountComponent implements OnInit {
 
     const email: string = this.signInWithEmailForm.get('email')?.value;
     const password: string = this.signInWithEmailForm.get('password')?.value;
-
-    // this.signInWithEmailForm
 
     if (
       this.signInWithEmailForm.get('email')?.valid &&
@@ -333,6 +302,7 @@ export class AccountComponent implements OnInit {
               }
             },
             (error:any)=>{
+                //handle error here 
 
             }); 
         })

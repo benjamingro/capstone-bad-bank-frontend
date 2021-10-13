@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'deposit', component: DepositComponent, canActivate:[AuthGuard]  },
   { path: 'withdraw', component: WithdrawComponent, canActivate:[AuthGuard] },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

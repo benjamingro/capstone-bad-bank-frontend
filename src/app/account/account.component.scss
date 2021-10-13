@@ -14,42 +14,38 @@ a.lookAlike{
     cursor:pointer;
 }
 
-.tableFixHead { 
-    max-height:275px; 
-    overflow-y:auto; 
+// .tableFixHead { 
+//     max-height:275px; 
+//     overflow-y:auto; 
+// }
+
+
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+// phone portrait orientation
+@media (max-width: $sm) {
+    .tableFixHead { 
+        max-height:400px; 
+        overflow-y:auto; 
+    }
 }
-// .tableFixHead          { overflow: auto; height: 300px; }
-// .tableFixHead thead th { position: sticky; top: 0; z-index: 10; }
-// table {
-//     width: 100%;
-// }
+// phone landscape orientation
+@media (min-width: $sm) and (max-width: $lg) {
+    .tableFixHead { 
+        max-height:200px; 
+        overflow-y:auto; 
+    }
+}
 
-// thead, tbody, tr, td, th { display: block; }
-
-// tr:after {
-//     content: ' ';
-//     display: block;
-//     visibility: hidden;
-//     clear: both;
-// }
-
-// thead th {
-//     height: 30px;
-
-//     /*text-align: left;*/
-// }
-
-// tbody {
-//     height: 300px;
-//     overflow-y: auto;
-// }
-
-// thead {
-//     /* fallback */
-// }
-
-
-// tbody td, thead th {
-//     width: 25%;
-//     float: left;
-// }
+// large devices
+@media (min-width: $lg) {
+    .tableFixHead { 
+        max-height:400px; 
+        overflow-y:auto; 
+    }
+}
