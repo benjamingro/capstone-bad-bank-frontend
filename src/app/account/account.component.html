@@ -88,10 +88,19 @@
                             <input type="email" class="form-control" id="validationCustom01" placeholder=""
                                 formControlName="email" required>
                             <div class="row w-100">
+                                <!-- client side validation -->
                                 <div class="col text-danger"
                                     *ngIf="email?.invalid && createAccountFromScratch_Form_submitted">
                                     Email is required
                                 </div>
+                                <!-- server side validation -->
+                                <div class="col " *ngIf="error_firebaseAuth=='auth/email-already-in-use'">
+                                    <span class="text-danger">Email address already in use.</span>
+                                </div>
+                                <div class="col " *ngIf="error_firebaseAuth=='auth/invalid-email'">
+                                    <span class="text-danger">Invalid email address.</span>
+                                </div>
+                                <!-- placeholder column -->
                                 <div class="col smallDisappear"
                                     *ngIf="(email?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                                     &nbsp;
@@ -115,10 +124,16 @@
                             <input type="text" class="form-control" id="validationCustom02" placeholder=""
                                 formControlName="password" required>
                             <div class="row w-100">
+                                <!-- client side validation  -->
                                 <div class="col text-danger"
                                     *ngIf="password?.invalid && createAccountFromScratch_Form_submitted">
                                     Password is required
                                 </div>
+                                <!-- server side validation  -->
+                                <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
+                                    <span class="text-danger">Password is too weak</span>
+                                </div>
+                                <!-- placeholder  -->
                                 <div class="col smallDisappear"
                                     *ngIf="(password?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                                     &nbsp;
@@ -128,13 +143,35 @@
                         <div class="col-sm-3"></div>
 
                     </div>
-                    <div class="row w-100 mt-2">
-                        <div class="col-1">
-                            <input type="checkbox">
+
+                    <div class="row w-100 mt-3 mb-2 text-secondary">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6 align-self-center">
+                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the Terms and Conditions
                         </div>
-                        <div class="col-11">
+                        <div class="col-sm-6"></div>
+
+
+                        <!-- <div class="col-sm-3 smallDisappear"></div>
+                        <div class="col-1 d-flex justify-content-end">
+                            <input type="checkbox" formControlName="agree">
+                        </div>
+                        <div class="col-11 text-secondary" >
                             I agree to the Terms and Conditions 
+                        </div> -->
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6 text-danger"
+                            *ngIf="agree?.invalid && createAccountFromScratch_Form_submitted">
+                            Must agree to terms and conditions
                         </div>
+                        <div class="col-sm-6 smallDisappear"
+                            *ngIf="(agree?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-3"></div>
                     </div>
 
                     <!-- <label class="text-secondary">First name</label>
@@ -206,7 +243,7 @@
                     <!-- #endregion -->
 
                     <!-- #region login error row -->
-                    <div class="row mb-2">
+                    <!-- <div class="row mb-2">
                         <div class="col" *ngIf="error_firebaseAuth==''">&nbsp;</div>
                         <div class="col " *ngIf="error_firebaseAuth=='auth/user-not-found'">
                             <span class="text-danger">User not found. </span>Create account.
@@ -221,7 +258,7 @@
                             <span class="text-danger">Password is too weak</span>
                         </div>
 
-                    </div>
+                    </div> -->
                     <!-- #endregion -->
 
                     <!-- #region button row -->

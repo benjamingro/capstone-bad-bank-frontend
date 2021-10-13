@@ -75,7 +75,7 @@ export class AccountComponent implements OnInit {
     lastName: new FormControl('', { validators: Validators.required }),
     email: new FormControl('', { validators: Validators.required }),
     password: new FormControl('', { validators: Validators.required }),
-    agree: new FormControl(false, { validators: Validators.required }),
+    agree: new FormControl(false, { validators: Validators.requiredTrue }),
     telephone: new FormControl(''),
   });
 
@@ -186,7 +186,8 @@ export class AccountComponent implements OnInit {
       this.createAccountFromScratch_Form.get('email')?.valid &&
       this.createAccountFromScratch_Form.get('password')?.valid &&
       this.createAccountFromScratch_Form.get('firstName')?.valid &&
-      this.createAccountFromScratch_Form.get('lastName')?.valid
+      this.createAccountFromScratch_Form.get('lastName')?.valid && 
+      this.createAccountFromScratch_Form.get('agree')?.valid
     ) {
       // form is validated
       const email: string =
@@ -337,6 +338,9 @@ export class AccountComponent implements OnInit {
   }
   get telephone() {
     return this.createAccountFromScratch_Form.get('telephone');
+  }
+  get agree() {
+    return this.createAccountFromScratch_Form.get('agree');
   }
 
   get email_signInWithEmail() {

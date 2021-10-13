@@ -45,5 +45,14 @@ $lg: 992px;
 $xl: 1200px;
 $xxl: 1400px;
 
+
+@media (max-width: $lg){
+    .smallDisappear{
+        display:none !important; 
+        // background-color: red; 
+    }
+}
+
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
