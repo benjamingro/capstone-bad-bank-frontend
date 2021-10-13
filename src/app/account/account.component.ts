@@ -52,6 +52,7 @@ export class AccountComponent implements OnInit {
   public readonly user: Observable<User | null> = EMPTY;
 
   public isLoggedIn: boolean = false;
+  public displayName:string=''; 
 
   public createAccountFromScratch_State: boolean = false;
   public createAccountSuccess_State: boolean = false;
@@ -92,22 +93,35 @@ export class AccountComponent implements OnInit {
     if (auth) {
       this.user = authState(this.auth);
       this.userDisposable = authState(this.auth)
-        .pipe(
-          traceUntilFirst('auth'),
-          map((u) => !!u)
-        )
-        .subscribe((isLoggedIn) => {
-          this.isLoggedIn = isLoggedIn;
+        // .pipe(
+        //   traceUntilFirst('auth'),
+        //   map((u) => !!u)
+        // )
+        // .subscribe((isLoggedIn) => {
+          .subscribe((myUser) => {
+            // console.log('inside auth state change'); 
+            // console.log(`myUser = `); 
+            // console.log(JSON.stringify(myUser)); 
+            if(myUser?.uid){
+              this.isLoggedIn = true; 
+              this.displayName = myUser.displayName!; 
+            }
+            else{
+              this.isLoggedIn = false; 
+            }
+            console.log(`this.isLoggedIn = ${this.isLoggedIn}`); 
+          // this.isLoggedIn = isLoggedIn;
+
           // get user data 
-          if(isLoggedIn){
+          // && !this.badBankService.badBankUser
+          if(this.isLoggedIn && !this.badBankService.badBankUser){
             badBankService.getUserAccount_Authenticated_Observable().subscribe(
               (response:any)=>{
                 this.busy=false;
                 if(response === 'user_not_set_up'){
                   this.createAccountFromGoogle_State = true; 
                   console.log(`inside user_not_set_up, this.createAccountFromGoogle_State = true`);
-                  console.log(`this.user = `); 
-                  console.log(JSON.stringify(this.user)); 
+                  
                 } 
 
               },(error:any)=>{
@@ -131,7 +145,9 @@ export class AccountComponent implements OnInit {
   }
 
   public async mySignOut() {
-    return await signOut(this.auth);
+    return await signOut(this.auth).then(()=>{
+      // this.auth.signOut(); 
+    });
   }
 
   public async createAccountFromGoogle_submit(){
@@ -301,11 +317,24 @@ export class AccountComponent implements OnInit {
       this.signInWithEmailForm.get('password')?.valid
     ) {
       this.error_firebaseAuth = '';
-
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
           // this.busy = false;
           this.signInWithMyEmail_State = false;
+          this.badBankService.getUserAccount_Authenticated_Observable().subscribe(
+            (results:any)=>{
+              try{
+                JSON.parse(results);
+                 this.busy=false; 
+              }
+              catch(error){
+                //handle error here 
+                this.busy=false;
+              }
+            },
+            (error:any)=>{
+
+            }); 
         })
         .catch((error) => {
           this.busy = false;

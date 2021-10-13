@@ -243,9 +243,11 @@
     <div class="col-lg-6 pt-4">
         <div class="card">
             <div class="card-header">
-                Create an account
+                <b>Welcome to Bad Bank</b>
             </div>
             <div class="card-body">
+                <p class="card-text">Please finish setting up your account</p>
+
                 <form class="needs-validation" novalidate [formGroup]="createAccountFromGoogle_Form"
                     (ngSubmit)="onSubmit()">
                     <!-- #region first name last name -->
@@ -328,7 +330,7 @@
                 </div>
                 <div class="row w-100 mb-4">
                     <div class="col d-flex">
-                        You can get started with a {{badBankService.badBankUser?.AccountBalance | currency}} account
+                        Get started with a {{badBankService.badBankUser?.AccountBalance | currency}} account
                         balance as a welcome gift.
                         <!-- You can get started with a ${{badBankUser?.AccountBalance}} account balance as a welcome gift.  -->
 
