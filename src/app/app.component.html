@@ -1,4 +1,23 @@
-<app-navbar></app-navbar>
-<div class="container-fluid p-0 pt-5">
-  <router-outlet class=""></router-outlet>
+<div class="wrapper">
+  <app-navbar></app-navbar>
+  <div class="container-fluid p-0 pt-5">
+    <router-outlet class=""></router-outlet>
+  </div>
+    <div class="push"></div>
 </div>
+
+<footer class="footer bg-light">
+  <div class="row w-100 text-secondary">
+    <div class="col-lg-2 col-5 align-self-center pt-2 ps-4">
+      <img src="assets/img/mitx-pro-logo.png" style="max-height:40px; opacity:0.5;">
+    </div>
+    <div class="col-lg-8 col-1 d-flex justify-content-center align-self-center pt-2 ">
+      <span class="smallDisappear">Professional Certificate in Full Stack Engineering <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>Capstone Project</span>
+    </div>
+    <div class="col-lg-2 col-6 d-flex justify-content-end align-self-center pt-2">
+      <div class="align-self-center" style="font-size:0.9rem;">Ben Gross&nbsp;&copy;&nbsp;2021&nbsp;&nbsp;|&nbsp;&nbsp;</div><a href="https://www.linkedin.com/in/nutritionengineering/" target="_blank" style="opacity:0.6;"><fa-icon [icon]="faLinkedin" style="font-size:1.8rem" class=""></fa-icon></a>
+    </div>
+    
+  </div>
+</footer>
+

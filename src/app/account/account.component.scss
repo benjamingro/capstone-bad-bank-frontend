@@ -50,11 +50,11 @@ $xxl: 1400px;
     }
 }
 
-@media (min-width: $xs){
-    .smallDisappear{
-        display:none; 
-    }
-}
+// @media (min-width: $xs){
+//     .smallDisappear{
+//         display:none; 
+//     }
+// }
 
 @media (max-width:$xs){
     .largeDisappear{

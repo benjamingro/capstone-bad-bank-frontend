@@ -32,11 +32,11 @@
                                 </div>
                                 <div class="col text-danger"
                                     *ngIf="amount_withdrawForm?.invalid && withdrawForm_submitted && (amount_withdrawForm?.errors?.pattern || amount_withdrawForm?.errors?.min)">
-                                    Withdraw amount must be a positive integer
+                                    Must be a positive integer
                                 </div>
                                 <div class="col text-danger"
-                                    *ngIf="amount_withdrawForm?.errors?.max">
-                                    Amount must not exceed account balance
+                                    *ngIf="amount_withdrawForm?.errors?.max && withdrawForm_submitted">
+                                    Insufficient funds
                                 </div>
                                 <div class="col"
                                     *ngIf="(amount_withdrawForm?.valid && withdrawForm_submitted) || !withdrawForm_submitted">
@@ -45,10 +45,10 @@
                             </div>
                             <!-- buttons row -->
                             <div class="row w-100">
-                                <div class="col-sm-6 py-1 d-flex justify-content-center">
+                                <div class="col-6 py-1 d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary" (click)="withdrawForm_submit()">Withdraw</button>
                                 </div>
-                                <div class="col-sm-6 py-1 d-flex justify-content-center">
+                                <div class="col-6 py-1 d-flex justify-content-center">
                                     <a class="btn btn-secondary" routerLink="/account">Cancel</a>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
             <div class="card-body">
                 <div class="row w-100 mb-4">
                     <div class="col d-flex justify-content-center">
-                        Your withdrawal of&nbsp;<b class="text-success">{{amount_withdrawForm|currency}}</b>&nbsp;has been accepted. 
+                        <div class="">Your withdrawal of&nbsp;<b class="text-success">{{amount_withdrawForm?.value|currency}}</b>&nbsp;has been accepted.</div> 
                     </div>
                 </div>
                 <div class="row w-100 mb-4">

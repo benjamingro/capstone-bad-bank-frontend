@@ -63,6 +63,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public async mySignOut() {
+    this.toggleNavbarMenu();
     return await signOut(this.auth).then(()=>{
     });
   }

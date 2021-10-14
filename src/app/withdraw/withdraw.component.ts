@@ -22,7 +22,7 @@ export class WithdrawComponent implements OnInit {
     ]),
   });
   constructor(public badBankService: BadBankService) {
-    
+
   }
 
   ngOnInit(): void {}
@@ -58,9 +58,10 @@ export class WithdrawComponent implements OnInit {
   public success_ok() : void {
     this.withdrawForm.setValue({amount:''});
     this.withdrawSuccess_State=false; 
+    this.withdrawForm_submitted = false; 
   }
 
   get amount_withdrawForm() {
-    return this.withdrawForm.get('amount')?.value;
+    return this.withdrawForm.get('amount');
   }
 }

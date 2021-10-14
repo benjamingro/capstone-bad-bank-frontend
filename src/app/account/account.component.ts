@@ -83,6 +83,7 @@ export class AccountComponent implements OnInit {
     firstName: new FormControl('', { validators: Validators.required }),
     lastName: new FormControl('', { validators: Validators.required }),
     telephone: new FormControl(''),
+    agree: new FormControl(false, { validators: Validators.requiredTrue }),
   });
 
   constructor(
@@ -139,9 +140,13 @@ export class AccountComponent implements OnInit {
   }
 
   public async createAccountFromGoogle_submit(){
+
+    this.createAccountFromGoogle_Form_submitted = true; 
+
     if (
       this.firstName_google?.valid &&
-      this.lastName_google?.valid
+      this.lastName_google?.valid &&
+      this.agree_google?.valid
     ) {
       // form is validated
       const firstName: string = this.firstName_google?.value;
@@ -358,6 +363,10 @@ export class AccountComponent implements OnInit {
   }
   get telephone_google() {
     return this.createAccountFromGoogle_Form.get('telephone');
+  }
+
+  get agree_google(){
+    return this.createAccountFromGoogle_Form.get('agree');
   }
 
   

@@ -53,6 +53,18 @@ $xxl: 1400px;
     }
 }
 
+a{
+    color:#007bff;
+    text-decoration:none; 
+    background-color:transparent;
+}
+a.lookAlike{
+    color:#007bff;
+    text-decoration:none; 
+    background-color:transparent;
+    cursor:pointer;
+}
+
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

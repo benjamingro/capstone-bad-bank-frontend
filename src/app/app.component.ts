@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  faLinkedin = faLinkedin;
   title = 'final-bad-bank';
 }

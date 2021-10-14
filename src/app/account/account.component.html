@@ -9,7 +9,8 @@
                         <!-- sign in with email -->
                         <button class="btn btn-secondary me-3 my-1" style="min-width:180px; "
                             (click)="signInWithMyEmail_State = true">
-                            <fa-icon [icon]="faEnvelope" style="" class="ms-1 me-2"></fa-icon>Sign in with email
+                            <fa-icon [icon]="faEnvelope" style="" class="ms-1 me-2"></fa-icon>Sign in
+                            with&nbsp;<b>email</b>
                         </button>
                     </div>
                     <div class="col-lg-6 py-2 d-flex justify-content-center">
@@ -52,8 +53,7 @@
                     <div class="row w-100">
                         <div class="col-sm-6">
                             <label class="text-secondary">First name</label>
-                            <input type="text" class="form-control" placeholder="" formControlName="firstName"
-                                required>
+                            <input type="text" class="form-control" placeholder="" formControlName="firstName" required>
                             <div class="row w-100">
                                 <div class="col text-danger"
                                     *ngIf="firstName?.invalid && createAccountFromScratch_Form_submitted">
@@ -67,8 +67,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label class="text-secondary">Last name</label>
-                            <input type="text" class="form-control" placeholder="" formControlName="lastName"
-                                required>
+                            <input type="text" class="form-control" placeholder="" formControlName="lastName" required>
                             <div class="row w-100">
                                 <div class="col text-danger"
                                     *ngIf="lastName?.invalid && createAccountFromScratch_Form_submitted">
@@ -147,18 +146,10 @@
                     <div class="row w-100 mt-3 mb-2 text-secondary">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-6 align-self-center">
-                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the Terms and Conditions
+                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the Terms and
+                            Conditions
                         </div>
                         <div class="col-sm-6"></div>
-
-
-                        <!-- <div class="col-sm-3 smallDisappear"></div>
-                        <div class="col-1 d-flex justify-content-end">
-                            <input type="checkbox" formControlName="agree">
-                        </div>
-                        <div class="col-11 text-secondary" >
-                            I agree to the Terms and Conditions 
-                        </div> -->
                     </div>
 
                     <div class="row w-100">
@@ -263,12 +254,12 @@
 
                     <!-- #region button row -->
                     <div class="row w-100">
-                        <div class="col-sm-6 my-2 d-flex justify-content-center">
+                        <div class="col-6 my-2 d-flex justify-content-center">
                             <button class="btn btn-primary" (click)="createAccountFromScratch_submit()">
                                 Create account
                             </button>
                         </div>
-                        <div class="col-sm-6 my-2 d-flex justify-content-center">
+                        <div class="col-6 my-2 d-flex justify-content-center">
                             <button class="btn btn-secondary" (click)="createAccountFromScratch_cancel()">
                                 Cancel
                             </button>
@@ -373,54 +364,126 @@
 
                 <form class="needs-validation" novalidate [formGroup]="createAccountFromGoogle_Form"
                     (ngSubmit)="onSubmit()">
+                    <div class="row w-100">
+                        <div class="col-sm-6 mb-1">
+                            <!-- first name -->
+                            <label class="text-secondary">First name</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="firstName" required>
+                            <div class="row w-100">
+                                <div class="col text-danger"
+                                    *ngIf="firstName_google?.invalid && createAccountFromGoogle_Form_submitted">
+                                    First name is required
+                                </div>
+                                <!-- <div class="col smallDisappear"
+                                    *ngIf="(firstName_google?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
+                                    &nbsp;
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-1">
+                            <!-- last name -->
+                            <label class="text-secondary">Last name</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="lastName" required>
+                            <div class="row w-100">
+                                <div class="col text-danger"
+                                    *ngIf="lastName_google?.invalid && createAccountFromGoogle_Form_submitted">
+                                    Last name is required
+                                </div>
+                                <!-- <div class="col smallDisappear"
+                                    *ngIf="(lastName_google?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
+                                    &nbsp;
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row w-100">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6 mb-1">
+                            <!-- telephone -->
+                            <label class="text-secondary">Telephone</label>
+                            <input type="tel" class="form-control" placeholder="(optional)" formControlName="telephone">
+                            <div class="row w-100">
+                                <!-- <div class="col smallDisappear">
+                                    &nbsp;
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+
+                    </div>
+
+                    <div class="row w-100 mt-3 mb-2 text-secondary">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6 align-self-center">
+                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the Terms and
+                            Conditions
+                        </div>
+                        <div class="col-sm-6"></div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6 text-danger"
+                            *ngIf="agree_google?.invalid && createAccountFromGoogle_Form_submitted">
+                            Must agree to terms and conditions
+                        </div>
+                        <!-- <div class="col-sm-6 smallDisappear"
+                            *ngIf="(agree?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
+                            &nbsp;
+                        </div> -->
+                        <div class="col-sm-3"></div>
+                    </div>
+
+
+
+
                     <!-- #region first name last name -->
-                    <label class="text-secondary">First name</label>
-                    <input type="text" class="form-control" placeholder="First name" formControlName="firstName"
+                    <!-- <label class="text-secondary">First name</label>
+                    <input type="text" class="form-control" placeholder="" formControlName="firstName"
                         required>
                     <div class="row w-100">
                         <div class="col text-danger"
                             *ngIf="firstName_google?.invalid && createAccountFromGoogle_Form_submitted">
                             First name is required
                         </div>
-                        <div class="col"
+                        <div class="col smallDisappear"
                             *ngIf="(firstName_google?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
                             &nbsp;
                         </div>
-                    </div>
+                    </div> -->
 
-                    <label class="text-secondary">Last name</label>
-                    <input type="text" class="form-control" placeholder="Last name" formControlName="lastName" required>
+                    <!-- <label class="text-secondary">Last name</label>
+                    <input type="text" class="form-control" placeholder="" formControlName="lastName" required>
                     <div class="row w-100">
                         <div class="col text-danger"
                             *ngIf="lastName_google?.invalid && createAccountFromGoogle_Form_submitted">
                             Last name is required
                         </div>
-                        <div class="col"
+                        <div class="col smallDisappear"
                             *ngIf="(lastName_google?.valid && createAccountFromGoogle_Form_submitted) || !createAccountFromGoogle_Form_submitted">
                             &nbsp;
                         </div>
-                    </div>
+                    </div> -->
                     <!-- #endregion -->
 
                     <!-- #region telephone number -->
-                    <label class="text-secondary">Telephone number</label>
-                    <input type="tel" class="form-control" placeholder="Telephone number (optional)"
-                        formControlName="telephone">
+                    <!-- <label class="text-secondary">Telephone</label>
+                    <input type="tel" class="form-control" placeholder="(optional)" formControlName="telephone">
                     <div class="row w-100">
-                        <div class="col">
+                        <div class="col smallDisappear">
                             &nbsp;
                         </div>
-                    </div>
+                    </div> -->
                     <!-- #endregion -->
 
                     <!-- #region button row -->
-                    <div class="row w-100">
-                        <div class="col-lg-6 my-2 d-flex justify-content-center">
+                    <div class="row w-100 mt-2">
+                        <div class="col-6 my-2 d-flex justify-content-center">
                             <button class="btn btn-primary" (click)="createAccountFromGoogle_submit()">
                                 Create account
                             </button>
                         </div>
-                        <div class="col-lg-6 my-2 d-flex justify-content-center">
+                        <div class="col-6 my-2 d-flex justify-content-center">
                             <button class="btn btn-secondary" (click)="createAccountFromGoogle_cancel()">
                                 Cancel
                             </button>
@@ -482,12 +545,13 @@
         <div class="card">
             <div class="card-header">
                 <div class="row  w-100">
-                    <div class="col align-self-center" style="font-weight: bold; font-size: 1.3rem;">
+                    <div class="col-6 align-self-center" style="font-weight: bold; font-size: 1.3rem;">
                         Welcome {{badBankService.badBankUser?.Fname}}
                     </div>
-                    <div class="col d-flex justify-content-end align-self-center">
-                        <span class="smallDisappear">Account balance:</span><span class="largeDisappear">Balance:</span>&nbsp;<span
-                            style="font-weight:bold;" class="align-self-center">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
+                    <div class="col-6 d-flex justify-content-end align-self-center">
+                        <!-- <span class="smallDisappear">Account balance:</span> -->
+                        <span class="text-secondary">Account balance:</span>&nbsp;<span style="font-weight:bold;"
+                            class="align-self-center">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
                     </div>
                 </div>
             </div>
@@ -527,7 +591,7 @@
                     <div class="col align-self-center py-1" style="font-weight:bold;font-size:1.2rem;">Transaction
                         history</div>
                     <div class="col d-flex justify-content-center align-self-center py-1">
-                        Current balance:&nbsp;<b>{{badBankService.badBankUser?.AccountBalance | currency}}</b>
+                        <span class="text-secondary">Account balance:</span>&nbsp;<b class="align-self-center">{{badBankService.badBankUser?.AccountBalance | currency}}</b>
                     </div>
                     <div class="col d-flex justify-content-end align-self-center py-1">
                         <a (click)="viewTransactionHistory_State=false" class="lookAlike">
