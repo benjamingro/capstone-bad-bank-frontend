@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import {
@@ -29,7 +29,7 @@ import { BadBankService } from '../bad-bank.service';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
   //#region font awesome members
   faGoogle = faGoogle;
   faEnvelope = faEnvelope;
@@ -374,7 +374,6 @@ export class AccountComponent implements OnInit {
       this.error_firebaseAuth = '';
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
-          // this.busy = false;
           this.signInWithMyEmail_State = false;
           this.badBankService.getUserAccount_Authenticated_Observable().subscribe(
             (results:any)=>{

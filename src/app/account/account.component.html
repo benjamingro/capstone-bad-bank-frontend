@@ -4,6 +4,9 @@
     <div class="col-lg-4"></div>
     <div class="col-lg-4 pt-4 ps-4 pe-1">
         <div class="card">
+            <div class="card-header d-flex justify-content-center" style="font-weight:bold;">
+                Sign in
+            </div>
             <div class="card-body">
                 <div class="row w-100 mb-4">
                     <div class="col-lg-6 py-2 d-flex justify-content-center">
@@ -22,22 +25,23 @@
                         </button>
                     </div>
                 </div>
+                
+                <!-- Create account -->
                 <div class="row w-100">
                     <div class="col d-flex justify-content-center">
-                        <!-- Create account -->
                         <a class="lookAlike" (click)="createAccountFromScratch_initial()">Create new account</a>
                     </div>
-
                 </div>
 
+                <!-- Forgot password -->
                 <div class="row w-100 mt-3">
                     <div class="col d-flex justify-content-center">
-                        <!-- Create account -->
                         <a class="lookAlike" style="font-size:small;"
                             (click)="forgotPassword_State=true">Forgot my password</a>
                     </div>
 
                 </div>
+
             </div>
         </div>
     </div>
@@ -98,14 +102,6 @@
 
                         </div>
                     </div>
-
-
-
-                    <!-- <div class="row w-100 mt-4">
-                        <div class="col text-secondary" style="font-size:smaller;">
-                            Password reset link will be sent to your email.
-                        </div>
-                    </div> -->
                 </form>
             </div>
         </div>
@@ -267,93 +263,6 @@
                         </div>
                         <div class="col-sm-3"></div>
                     </div>
-
-                    <!-- <label class="text-secondary">First name</label>
-                    <input type="text" class="form-control" placeholder="First name" formControlName="firstName"
-                        required>
-                    <div class="row w-100">
-                        <div class="col text-danger"
-                            *ngIf="firstName?.invalid && createAccountFromScratch_Form_submitted">
-                            First name is required
-                        </div>
-                        <div class="col"
-                            *ngIf="(firstName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
-                            &nbsp;
-                        </div>
-                    </div> -->
-
-                    <!-- <label class="text-secondary">Last name</label>
-                    <input type="text" class="form-control" placeholder="Last name" formControlName="lastName" required>
-                    <div class="row w-100">
-                        <div class="col text-danger"
-                            *ngIf="lastName?.invalid && createAccountFromScratch_Form_submitted">
-                            Last name is required
-                        </div>
-                        <div class="col"
-                            *ngIf="(lastName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
-                            &nbsp;
-                        </div>
-                    </div> -->
-                    <!-- #endregion -->
-
-                    <!-- #region email password input row -->
-                    <!-- <label class="text-secondary">Email</label>
-                    <input type="email" class="form-control" id="validationCustom01" placeholder="Email"
-                        formControlName="email" required>
-                    <div class="row w-100">
-                        <div class="col text-danger" *ngIf="email?.invalid && createAccountFromScratch_Form_submitted">
-                            Email is required
-                        </div>
-                        <div class="col"
-                            *ngIf="(email?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
-                            &nbsp;
-                        </div>
-                    </div> -->
-
-                    <!-- <label class="text-secondary">Password</label>
-                    <input type="text" class="form-control" id="validationCustom02" placeholder="Password"
-                        formControlName="password" required>
-                    <div class="row w-100">
-                        <div class="col text-danger"
-                            *ngIf="password?.invalid && createAccountFromScratch_Form_submitted">
-                            Password is required
-                        </div>
-                        <div class="col"
-                            *ngIf="(password?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
-                            &nbsp;
-                        </div>
-                    </div> -->
-                    <!-- #endregion -->
-
-                    <!-- #region telephone number -->
-                    <!-- <label class="text-secondary">Telephone number</label>
-                    <input type="tel" class="form-control" placeholder="Telephone number (optional)"
-                        formControlName="telephone">
-                    <div class="row w-100">
-                        <div class="col">
-                            &nbsp;
-                        </div>
-                    </div> -->
-                    <!-- #endregion -->
-
-                    <!-- #region login error row -->
-                    <!-- <div class="row mb-2">
-                        <div class="col" *ngIf="error_firebaseAuth==''">&nbsp;</div>
-                        <div class="col " *ngIf="error_firebaseAuth=='auth/user-not-found'">
-                            <span class="text-danger">User not found. </span>Create account.
-                        </div>
-                        <div class="col " *ngIf="error_firebaseAuth=='auth/email-already-in-use'">
-                            <span class="text-danger">Email address already in use.</span>
-                        </div>
-                        <div class="col " *ngIf="error_firebaseAuth=='auth/invalid-email'">
-                            <span class="text-danger">Invalid email address.</span>
-                        </div>
-                        <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
-                            <span class="text-danger">Password is too weak</span>
-                        </div>
-
-                    </div> -->
-                    <!-- #endregion -->
 
                     <!-- #region button row -->
                     <div class="row w-100">
@@ -607,17 +516,12 @@
                     <div class="col " style="font-size:1.2rem; ">
                         Welcome to Bad Bank, <span
                             style="font-weight:bold;">{{badBankService.badBankUser?.Fname}}</span>.
-                        <!-- Thank you {{badBankUser?.Fname}} -->
-
                     </div>
-
                 </div>
                 <div class="row w-100 mb-4">
                     <div class="col d-flex">
                         Get started with a {{badBankService.badBankUser?.AccountBalance | currency}} account
                         balance as a welcome gift.
-                        <!-- You can get started with a ${{badBankUser?.AccountBalance}} account balance as a welcome gift.  -->
-
                     </div>
 
                 </div>
@@ -646,7 +550,6 @@
                         Welcome {{badBankService.badBankUser?.Fname}}
                     </div>
                     <div class="col-6 d-flex justify-content-end align-self-center">
-                        <!-- <span class="smallDisappear">Account balance:</span> -->
                         <span class="text-secondary">Account balance:</span>&nbsp;<span style="font-weight:bold;"
                             class="align-self-center">{{badBankService.badBankUser?.AccountBalance | currency}}</span>
                     </div>

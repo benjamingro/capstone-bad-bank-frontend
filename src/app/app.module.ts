@@ -22,7 +22,6 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 import { AccountComponent } from './account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { BusyComponent } from './busy/busy.component';
 
 
@@ -35,7 +34,6 @@ import { BusyComponent } from './busy/busy.component';
     DepositComponent,
     WithdrawComponent,
     AccountComponent,
-    TransactionHistoryComponent,
     BusyComponent
   ],
   imports: [
