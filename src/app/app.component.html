@@ -1,12 +1,15 @@
+<app-background></app-background>
 <div class="wrapper">
-  <app-navbar *ngIf="showNavbar"></app-navbar>
-  <div class="container-fluid p-0 pt-5">
-    <router-outlet class=""></router-outlet>
+  <app-navbar [@fadeIn]="!showNavbar?'initial':'final'"></app-navbar>
+  <!-- *ngIf="showNavbar"  -->
+  <div class="container-fluid p-0 pt-5" [@fadeOutIn]="animationState">
+    <router-outlet class="" ></router-outlet>
   </div>
     <div class="push"></div>
 </div>
 
-<footer class="footer bg-light" *ngIf="showNavbar">
+<footer class="footer bg-light" [@fadeIn]="!showNavbar?'initial':'final'">
+  <!-- *ngIf="showNavbar"  -->
   <div class="row w-100 text-secondary">
     <div class="col-lg-2 col-5 align-self-center pt-2 ps-4">
       <img src="assets/img/mitx-pro-logo.png" style="max-height:40px; opacity:0.5;">

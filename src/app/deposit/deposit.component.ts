@@ -12,6 +12,7 @@ export class DepositComponent implements OnInit {
 
   public busy_State: boolean = false;
   public depositSuccess_State: boolean = false;
+  public error_State : boolean = false; 
 
   depositForm = new FormGroup({
     amount: new FormControl('', [
@@ -41,6 +42,7 @@ export class DepositComponent implements OnInit {
           (error: any) => {
             // show error here
             this.busy_State = false;
+            this.error_State = true; 
           }
         );
     } else {

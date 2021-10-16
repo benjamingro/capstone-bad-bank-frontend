@@ -1,6 +1,8 @@
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 import {
   Auth,
   authState,
@@ -20,7 +22,7 @@ import { map } from 'rxjs/operators';
 import { traceUntilFirst } from '@angular/fire/performance';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEye, faEyeSlash,faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { BadBankService } from '../bad-bank.service';
 
@@ -35,7 +37,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   faEnvelope = faEnvelope;
   faArrowLeft = faArrowLeft;
   faEye = faEye; 
-  faEyeSlash=faEyeSlash;  
+  faEyeSlash=faEyeSlash; 
+  faTimes = faTimes;  
   //#endregion
 
   //#region auth state members
@@ -61,7 +64,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   public forgotPassword_State : boolean = false;
   public forgotPasswordSuccess_State : boolean = false; 
   public busy: boolean = false;
- 
+  public error_State : boolean = false; 
+  public popupError_State : boolean = false; 
   //#endregion
 
 
@@ -105,7 +109,8 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   constructor(
     @Optional() private auth: Auth,
-    public badBankService: BadBankService
+    public badBankService: BadBankService,
+    private modalService: NgbModal
   ) {
     if (auth) {
       this.user = authState(this.auth);
@@ -133,6 +138,7 @@ export class AccountComponent implements OnInit, OnDestroy {
               },(error:any)=>{
                 this.busy=false;
                 // sql error need to handle here , general error should work
+                this.error_State=true; 
                 console.log(error); 
               });
           }
@@ -212,6 +218,15 @@ export class AccountComponent implements OnInit, OnDestroy {
   // #endregion
 
   //#region createAccountFromGoogle_Form methods
+  // show terms and conditions
+  public openModal(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      // this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
   public async createAccountFromGoogle_submit(){
 
     this.createAccountFromGoogle_Form_submitted = true; 
@@ -235,6 +250,8 @@ export class AccountComponent implements OnInit, OnDestroy {
           }
           catch(error){
             // need to catch error here 
+            this.error_State=true; 
+
           }
           this.createAccountFromGoogle_State = false;  
           this.busy = false;
@@ -242,6 +259,8 @@ export class AccountComponent implements OnInit, OnDestroy {
         (error:any)=>{
           console.log(`error = ${JSON.stringify(error)}`);
           this.busy = false;
+          this.error_State=true; 
+
         }); 
     }
   }
@@ -261,8 +280,11 @@ export class AccountComponent implements OnInit, OnDestroy {
       .then(() => {})
       .catch((error) => {
         console.log(JSON.stringify(error));
+        // please enable pop ups and try again 
+        this.popupError_State = true;
       });
   }
+
   //#endregion
 
   //#region createAccountFromScratch_Form methods
@@ -315,7 +337,9 @@ export class AccountComponent implements OnInit, OnDestroy {
                   this.createAccountSuccess_State = true;
                 }
                 catch(error){
-                  // need to catch error here 
+                  // need to catch error here
+                  this.error_State=true; 
+ 
                 }
 
                 this.createAccountFromScratch_State = false;  
@@ -326,6 +350,8 @@ export class AccountComponent implements OnInit, OnDestroy {
               (error: any) => {
                 console.log(`error = ${JSON.stringify(error)}`);
                 this.busy = false;
+                this.error_State=true; 
+
               }
             );
           // this.busy = false;
@@ -384,12 +410,15 @@ export class AccountComponent implements OnInit, OnDestroy {
               catch(error){
                 //handle error here 
                 this.busy=false;
+                this.error_State=true; 
+
 
               }
             },
             (error:any)=>{
                 //handle error here 
-                
+                this.error_State=true; 
+
             }); 
         })
         .catch((error) => {
@@ -399,9 +428,8 @@ export class AccountComponent implements OnInit, OnDestroy {
           this.error_firebaseAuth = error.code;
         });
 
-      // return null;
     } else {
-      // return null;
+      // form is not valid 
       this.busy = false;
     }
 

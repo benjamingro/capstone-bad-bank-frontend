@@ -23,6 +23,8 @@ import { AccountComponent } from './account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BusyComponent } from './busy/busy.component';
+import { BackgroundComponent } from './background/background.component';
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { BusyComponent } from './busy/busy.component';
     DepositComponent,
     WithdrawComponent,
     AccountComponent,
-    BusyComponent
+    BusyComponent,
+    BackgroundComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

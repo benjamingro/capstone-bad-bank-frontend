@@ -1,5 +1,5 @@
 <!-- #region withdraw screen -->
-<div class="row w-100" *ngIf="!busy_State && !withdrawSuccess_State">
+<div class="row w-100" *ngIf="!busy_State && !withdrawSuccess_State && !error_State">
     <div class="col-lg-4"></div>
     <div class="col-lg-4 pt-4 ps-4 pe-1">
         <div class="card">
@@ -64,7 +64,7 @@
 <!-- #endregion -->
 
 <!-- #region withdraw success screen -->
-<div class="row w-100" *ngIf="!busy_State && withdrawSuccess_State">
+<div class="row w-100" *ngIf="!busy_State && withdrawSuccess_State && !error_State">
     <div class="col-lg-4"></div>
     <div class="col-lg-4 pt-4 ps-4 pe-1">
         <div class="card">
@@ -95,4 +95,8 @@
 
 <!-- #region busy screen -->
 <app-busy *ngIf="busy_State"></app-busy>
+<!-- #endregion -->
+
+<!-- #region error screen -->
+<app-error *ngIf="error_State"></app-error>
 <!-- #endregion -->

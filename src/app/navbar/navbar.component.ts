@@ -1,5 +1,7 @@
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 import { traceUntilFirst } from '@angular/fire/performance';
 import { map } from 'rxjs/operators';
@@ -36,7 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public navbar_menu_expand_mobile: boolean = false;
   public isLoggedIn: boolean = false;
 
-  constructor(@Optional() private auth: Auth, private location: Location) {
+  constructor(@Optional() private auth: Auth, private location: Location, private router:Router) {
     location.onUrlChange((url: string, state: unknown): void => {
       this.current_route = url;
       console.log(`this.current_route = ${this.current_route}`);
@@ -55,7 +57,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   ngOnDestroy(): void {
     if (this.userDisposable) {
