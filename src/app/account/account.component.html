@@ -61,12 +61,12 @@
             <div class="card-body">
                 <div class="row w-100 mb-3">
                     <div class="col d-flex justify-content-center">
-                        It looks like pop-ups are disabled. Please enable popups for this site to sign in with Google. 
+                        It looks like pop-ups are disabled. Please enable popups for this site to sign in with Google.
                     </div>
                 </div>
                 <div class="row w-100">
                     <div class="col d-flex justify-content-center">
-                        <button class="btn btn-primary" (click)="popupError_State=false">Ok</button> 
+                        <button class="btn btn-primary" (click)="popupError_State=false">Ok</button>
                     </div>
                 </div>
             </div>
@@ -246,11 +246,21 @@
                         </div>
                     </div>
                     <div class="row w-100">
-                        <div class="col-sm-3"></div>
+                        <!-- password -->
                         <div class="col-sm-6">
                             <label class="text-secondary">Password</label>
-                            <input type="text" class="form-control" id="validationCustom02" placeholder=""
-                                formControlName="password" required>
+                            <div class="input-group">
+                                <input [type]="viewPassword_createAccountFromScratch_Form ? 'text' : 'password'" class="form-control" formControlName="password" required>
+                                <div class="input-group-append"
+                                (click)="viewPassword_createAccountFromScratch_Form = !viewPassword_createAccountFromScratch_Form">
+                                <span class="input-group-text">
+                                    <fa-icon [icon]="faEyeSlash" style="" class=""
+                                        *ngIf="viewPassword_createAccountFromScratch_Form"></fa-icon>
+                                    <fa-icon [icon]="faEye" style="" class="" *ngIf="!viewPassword_createAccountFromScratch_Form">
+                                    </fa-icon>
+                                </span>
+                            </div>
+                            </div>
                             <div class="row w-100">
                                 <!-- client side validation  -->
                                 <div class="col text-danger"
@@ -268,14 +278,45 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div class="col-sm-3"></div>
+                        <!-- re-enter password -->
+                        <div class="col-sm-6">
+                            <label class="text-secondary">Confirm password</label>
+                            <div class="input-group">
+                                <input [type]="viewPassword_createAccountFromScratch_Form ? 'text' : 'password'" class="form-control" formControlName="passwordReenter" required>
+                                <div class="input-group-append"
+                                (click)="viewPassword_createAccountFromScratch_Form = !viewPassword_createAccountFromScratch_Form">
+                                <span class="input-group-text">
+                                    <fa-icon [icon]="faEyeSlash"
+                                        *ngIf="viewPassword_createAccountFromScratch_Form"></fa-icon>
+                                    <fa-icon [icon]="faEye" *ngIf="!viewPassword_createAccountFromScratch_Form">
+                                    </fa-icon>
+                                </span>
+                            </div>
+                            </div>
+                            <div class="row w-100">
+                                <!-- client side validation  -->
+                                <div class="col text-danger"
+                                    *ngIf="passwordReenter?.invalid && createAccountFromScratch_Form_submitted && passwordReenter?.errors?.required">
+                                    Must confirm password
+                                </div>
+                                <div class="col text-danger"
+                                    *ngIf="passwordReenter?.invalid && createAccountFromScratch_Form_submitted && passwordReenter?.errors?.pattern">
+                                    Passwords do not match
+                                </div>
+                                <!-- server side validation  -->
+                                <!-- <div class="col " *ngIf="error_firebaseAuth=='auth/weak-password'">
+                                    <span class="text-danger">Password is too weak</span>
+                                </div> -->
+                                
+                            </div>
+                        </div>
 
                     </div>
-                    
+
                     <div class="row w-100 mt-3 mb-2 text-secondary">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-6 align-self-center">
-                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the 
+                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the
                             <a class="lookAlike" (click)="openModal(content)">Terms and Conditions</a>
 
                         </div>
@@ -335,61 +376,88 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                Please read these terms and conditions ("terms and conditions", "terms") carefully before using Bad Bank website (“website”,"service") operated by  Bad Bank ("us", 'we", "our").
+                Please read these terms and conditions ("terms and conditions", "terms") carefully before using Bad Bank
+                website (“website”,"service") operated by Bad Bank ("us", 'we", "our").
             </p>
             <p class="card-text">
                 <b>Conditions of use</b>
             </p>
             <p class="card-text">
-                By using this website, you certify that you have read and reviewed this Agreement and that you agree to comply with its terms. If you do not want to be bound by the terms of this Agreement, you  are  advised  to  leave  the  website  accordingly.   Bad Bank  only  grants  use  and  access  of  this website, its products, and its services to those who have accepted its terms.
+                By using this website, you certify that you have read and reviewed this Agreement and that you agree to
+                comply with its terms. If you do not want to be bound by the terms of this Agreement, you are advised to
+                leave the website accordingly. Bad Bank only grants use and access of this website, its products, and
+                its services to those who have accepted its terms.
             </p>
             <p class="card-text">
                 <b>Privacy policy</b>
             </p>
             <p class="card-text">
-                Before you continue using our website, we advise you to read our privacy policy regarding our user data collection. It will help you better understand our practices.
+                Before you continue using our website, we advise you to read our privacy policy regarding our user data
+                collection. It will help you better understand our practices.
             </p>
             <p class="card-text">
                 <b>Age restriction</b>
             </p>
             <p class="card-text">
-                You must be at least 18 (eighteen) years of age before you can use this website. By using this website, you warrant that you are at least 18 years of age and you may legally adhere to this Agreement.  Bad Bank assumes no responsibility for liabilities related to age misrepresentation.
+                You must be at least 18 (eighteen) years of age before you can use this website. By using this website,
+                you warrant that you are at least 18 years of age and you may legally adhere to this Agreement. Bad Bank
+                assumes no responsibility for liabilities related to age misrepresentation.
             </p>
             <p class="card-text">
                 <b>Intellectual property</b>
             </p>
             <p class="card-text">
-                You agree that all materials, products, and services provided on this website are the property of  Bad Bank, its affiliates,  directors,  officers,  employees,  agents,  suppliers,  or  licensors including  all copyrights,  trade  secrets,  trademarks,  patents,  and  other  intellectual  property.  You  also  agree that  you  will  not  reproduce  or  redistribute  the  Bad Bank’s intellectual  propertyin  any  way, including electronic, digital, or new trademark registrations.You  grant   Bad Bank  a  royalty-free  and  non-exclusive  license  to  display,  use,  copy,  transmit,  and broadcast the content you upload and publish. For issues regarding intellectual property claims, you should contact the company in order to come to an agreement.
+                You agree that all materials, products, and services provided on this website are the property of Bad
+                Bank, its affiliates, directors, officers, employees, agents, suppliers, or licensors including all
+                copyrights, trade secrets, trademarks, patents, and other intellectual property. You also agree that you
+                will not reproduce or redistribute the Bad Bank’s intellectual propertyin any way, including electronic,
+                digital, or new trademark registrations.You grant Bad Bank a royalty-free and non-exclusive license to
+                display, use, copy, transmit, and broadcast the content you upload and publish. For issues regarding
+                intellectual property claims, you should contact the company in order to come to an agreement.
             </p>
             <p class="card-text">
                 <b>User accounts</b>
             </p>
             <p class="card-text">
-                As a user of this website, you may be asked to register with us and provide private information. You  are  responsible  for  ensuring  the  accuracy  of  this  information,  and  you  are  responsible  for maintaining the safety and security of your identifying information. You are also responsible for all activities that occur under your account or password.If you think there are any possible issues regarding the security of your account on the website, inform us immediately so we may address themaccordingly. We reserve all rights to terminate accounts, edit or remove content and cancel orders at our sole discretion.
+                As a user of this website, you may be asked to register with us and provide private information. You are
+                responsible for ensuring the accuracy of this information, and you are responsible for maintaining the
+                safety and security of your identifying information. You are also responsible for all activities that
+                occur under your account or password.If you think there are any possible issues regarding the security
+                of your account on the website, inform us immediately so we may address themaccordingly. We reserve all
+                rights to terminate accounts, edit or remove content and cancel orders at our sole discretion.
             </p>
             <p class="card-text">
                 <b>Applicable law</b>
             </p>
             <p class="card-text">
-                By visiting this website, you agree that the laws of the United States, without regard to principles of conflict laws, will govern these terms and conditions, or any dispute of any sort that might come between  Bad Bank and you, or its business partners and associates.
+                By visiting this website, you agree that the laws of the United States, without regard to principles of
+                conflict laws, will govern these terms and conditions, or any dispute of any sort that might come
+                between Bad Bank and you, or its business partners and associates.
             </p>
             <p class="card-text">
                 <b>Disputes</b>
             </p>
             <p class="card-text">
-                Any dispute related in any way to your visit to this website or to products you purchase from us shall be arbitrated  by  state or  federal court United States and you consent to exclusive jurisdiction and venue of such courts.
+                Any dispute related in any way to your visit to this website or to products you purchase from us shall
+                be arbitrated by state or federal court United States and you consent to exclusive jurisdiction and
+                venue of such courts.
             </p>
             <p class="card-text">
                 <b>Indemnification</b>
             </p>
             <p class="card-text">
-                You  agree  to  indemnify  Bad Bank and  its  affiliates and  hold   Bad Bank  harmless  against  legal claims and  demands  that  may  arise  from  your  use  or  misuse  of  our  services.  We  reserve  the  right  to select our own legal counsel. 
+                You agree to indemnify Bad Bank and its affiliates and hold Bad Bank harmless against legal claims and
+                demands that may arise from your use or misuse of our services. We reserve the right to select our own
+                legal counsel.
             </p>
             <p class="card-text">
                 <b>Limitation on liability</b>
             </p>
             <p class="card-text">
-                 Bad Bank is not liable for any  damages  that  may  occur  to  you  as  a  result  of  your  misuse  of  our website. Bad Bank  reserves  the  right to  edit,  modify, and change this Agreement at any  time.  We shall  let our  users know  of  these  changes  through  electronic  mail. This Agreement  is an  understanding between  Bad Bank and the user, and this supersedes and replaces all prior agreements regarding the use of this website.
+                Bad Bank is not liable for any damages that may occur to you as a result of your misuse of our website.
+                Bad Bank reserves the right to edit, modify, and change this Agreement at any time. We shall let our
+                users know of these changes through electronic mail. This Agreement is an understanding between Bad Bank
+                and the user, and this supersedes and replaces all prior agreements regarding the use of this website.
             </p>
             <div class="row w-100">
                 <div class="d-flex justify-content-center">
@@ -410,7 +478,7 @@
     <!-- <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
     </div> -->
-  </ng-template> 
+</ng-template>
 <!-- #endregion -->
 
 
@@ -450,13 +518,14 @@
                                 (click)="tryAgain_signInWithEmailForm()">try again</a>.
                         </div>
                     </div>
-                    
+
                     <!-- password input row -->
                     <div class="row w-100">
                         <div class="col input-group">
                             <input [type]="viewPassword_signInWithEmailForm ? 'text' : 'password'" class="form-control"
                                 id="validationCustom02" placeholder="Password" formControlName="password" required>
-                            <div class="input-group-append" (click)="viewPassword_signInWithEmailForm = !viewPassword_signInWithEmailForm">
+                            <div class="input-group-append"
+                                (click)="viewPassword_signInWithEmailForm = !viewPassword_signInWithEmailForm">
                                 <span class="input-group-text">
                                     <fa-icon [icon]="faEyeSlash" style="" class=""
                                         *ngIf="viewPassword_signInWithEmailForm"></fa-icon>
@@ -466,7 +535,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- password error row -->
                     <div class="row w-100">
                         <!-- client side validation -->

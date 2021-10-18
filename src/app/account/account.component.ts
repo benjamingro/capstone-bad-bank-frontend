@@ -1,5 +1,5 @@
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators,AbstractControl } from '@angular/forms';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -31,6 +31,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { BadBankService } from '../bad-bank.service';
+
+import { ConfirmedValidator } from '../confirmed.validator';
 
 @Component({
   selector: 'app-account',
@@ -92,6 +94,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     lastName: new FormControl('', { validators: Validators.required }),
     email: new FormControl('', { validators: Validators.required }),
     password: new FormControl('', { validators: Validators.required }),
+    passwordReenter: new FormControl('', {validators: Validators.required}),
     agree: new FormControl(false, { validators: Validators.requiredTrue }),
     telephone: new FormControl(''),
   });
@@ -301,6 +304,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     if (
       this.createAccountFromScratch_Form.get('email')?.valid &&
       this.createAccountFromScratch_Form.get('password')?.valid &&
+      this.createAccountFromScratch_Form.get('passwordReenter')?.valid &&
       this.createAccountFromScratch_Form.get('firstName')?.valid &&
       this.createAccountFromScratch_Form.get('lastName')?.valid &&
       this.createAccountFromScratch_Form.get('agree')?.valid
@@ -464,6 +468,9 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
   get password() {
     return this.createAccountFromScratch_Form.get('password');
+  }
+  get passwordReenter() {
+    return this.createAccountFromScratch_Form.get('passwordReenter');
   }
   get telephone() {
     return this.createAccountFromScratch_Form.get('telephone');
