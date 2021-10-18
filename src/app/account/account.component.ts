@@ -1,7 +1,7 @@
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import {
   Auth,
@@ -16,13 +16,19 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  Persistence,
 } from '@angular/fire/auth';
 import { EMPTY, Observable, Subscription, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { traceUntilFirst } from '@angular/fire/performance';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeft, faEye, faEyeSlash,faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faEye,
+  faEyeSlash,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { BadBankService } from '../bad-bank.service';
 
@@ -36,16 +42,16 @@ export class AccountComponent implements OnInit, OnDestroy {
   faGoogle = faGoogle;
   faEnvelope = faEnvelope;
   faArrowLeft = faArrowLeft;
-  faEye = faEye; 
-  faEyeSlash=faEyeSlash; 
-  faTimes = faTimes;  
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
+  faTimes = faTimes;
   //#endregion
 
   //#region auth state members
   private readonly userDisposable: Subscription | undefined;
   public readonly user: Observable<User | null> = EMPTY;
   public isLoggedIn: boolean = false;
-  public displayName:string=''; 
+  public displayName: string = '';
   public error_firebaseAuth: string = '';
   // error_firebaseAuth =
   // 'auth/user-not-found'
@@ -54,23 +60,21 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   //#endregion
 
-
   //#region application state members
   public createAccountFromScratch_State: boolean = false;
   public createAccountSuccess_State: boolean = false;
   public createAccountFromGoogle_State: boolean = false;
   public signInWithMyEmail_State: boolean = false;
-  public viewTransactionHistory_State : boolean = false; 
-  public forgotPassword_State : boolean = false;
-  public forgotPasswordSuccess_State : boolean = false; 
+  public viewTransactionHistory_State: boolean = false;
+  public forgotPassword_State: boolean = false;
+  public forgotPasswordSuccess_State: boolean = false;
   public busy: boolean = false;
-  public error_State : boolean = false; 
-  public popupError_State : boolean = false; 
+  public error_State: boolean = false;
+  public popupError_State: boolean = false;
   //#endregion
 
-
   // #region form members
-  public viewPassword_signInWithEmailForm : boolean = false; 
+  public viewPassword_signInWithEmailForm: boolean = false;
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', { validators: Validators.required }),
@@ -104,7 +108,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   public signInWithEmailForm_submitted: boolean = false;
   public createAccountFromScratch_Form_submitted: boolean = false;
   public createAccountFromGoogle_Form_submitted: boolean = false;
-  public forgotPasswordForm_submitted : boolean = false; 
+  public forgotPasswordForm_submitted: boolean = false;
   //#endregion
 
   constructor(
@@ -114,38 +118,34 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) {
     if (auth) {
       this.user = authState(this.auth);
-      this.userDisposable = authState(this.auth)
-          .subscribe((myUser) => {
-            if(myUser?.uid){
-              this.isLoggedIn = true; 
-              this.displayName = myUser.displayName!; 
-            }
-            else{
-              this.isLoggedIn = false; 
-            }
+      this.userDisposable = authState(this.auth).subscribe((myUser) => {
+        if (myUser?.uid) {
+          this.isLoggedIn = true;
+          this.displayName = myUser.displayName!;
+        } else {
+          this.isLoggedIn = false;
+        }
 
-          // get user data 
-          if(this.isLoggedIn && !this.badBankService.badBankUser){
-            badBankService.getUserAccount_Authenticated_Observable().subscribe(
-              (response:any)=>{
-                this.busy=false;
-                if(response === 'user_not_set_up'){
-                  this.createAccountFromGoogle_State = true; 
-                  console.log(`inside user_not_set_up, this.createAccountFromGoogle_State = true`);
-                  
-                } 
-
-              },(error:any)=>{
-                this.busy=false;
-                // sql error need to handle here , general error should work
-                this.error_State=true; 
-                console.log(error); 
-              });
-          }
-          
-        });
+        // get user data
+        if (this.isLoggedIn && !this.badBankService.badBankUser) {
+          badBankService.getUserAccount_Authenticated_Observable().subscribe(
+            (response: any) => {
+              this.busy = false;
+              if (response === 'user_not_set_up') {
+                this.createAccountFromGoogle_State = true;
+              } else if (response === 'sql_error') {
+                this.busy = false;
+                this.error_State = true;
+              }
+            },
+            (error: any) => {
+              this.busy = false;
+              this.error_State = true;
+            }
+          );
+        }
+      });
     }
-
   }
 
   ngOnInit(): void {}
@@ -157,79 +157,80 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   public async mySignOut() {
-    return await signOut(this.auth).then(()=>{
-      // this.auth.signOut(); 
+    return await signOut(this.auth).then(() => {
+      // this.auth.signOut();
     });
   }
 
   //#region forgotPasswordForm methods
-  public async forgotPassword_submit(){
-    this.forgotPasswordForm_submitted = true; 
-    this.error_firebaseAuth = ""; 
-    this.busy=true; 
-    if(this.email_forgotPassword?.valid){
-      await sendPasswordResetEmail(this.auth,this.email_forgotPassword?.value)
-      .then(()=>{
-        // password reset successful 
-        this.forgotPasswordForm_submitted = false; 
+  public async forgotPassword_submit() {
+    this.forgotPasswordForm_submitted = true;
+    this.error_firebaseAuth = '';
+    this.busy = true;
+    if (this.email_forgotPassword?.valid) {
+      await sendPasswordResetEmail(this.auth, this.email_forgotPassword?.value)
+        .then(() => {
+          // password reset successful
+          this.forgotPasswordForm_submitted = false;
 
-        this.forgotPassword_State = false; 
-        this.forgotPasswordSuccess_State = true; 
-        this.busy = false; 
-      })
-      .catch((error : any)=>{
-        this.error_firebaseAuth = error.code;
-        console.log(`error = ${JSON.stringify(error)}`);
-        console.log(error);
-        this.busy = false;
-      }); 
+          this.forgotPassword_State = false;
+          this.forgotPasswordSuccess_State = true;
+          this.busy = false;
+        })
+        .catch((error: any) => {
+          this.error_firebaseAuth = error.code;
+          this.busy = false;
+        });
     }
-    
   }
 
-  public forgotPassword_cancel(){
-    this.email_forgotPassword?.setValue(''); 
-    this.forgotPassword_State = false; 
+  public forgotPassword_cancel() {
+    this.email_forgotPassword?.setValue('');
+    this.forgotPassword_State = false;
     this.forgotPasswordForm_submitted = false;
-    this.error_firebaseAuth = ''; 
+    this.error_firebaseAuth = '';
   }
 
-  public createNewAccount_forgotPasswordForm() : void { 
-    this.forgotPassword_State = false; 
-    this.createAccountFromScratch_State = true; 
-    this.email_forgotPassword?.setValue(''); 
-    this.forgotPasswordForm_submitted = false; 
-    this.error_firebaseAuth = ''; 
-  }
-
-  public tryAgain_forgotPasswordForm() : void {
-    this.email_forgotPassword?.setValue(''); 
+  public createNewAccount_forgotPasswordForm(): void {
+    this.forgotPassword_State = false;
+    this.createAccountFromScratch_State = true;
+    this.email_forgotPassword?.setValue('');
     this.forgotPasswordForm_submitted = false;
-    this.error_firebaseAuth = ''; 
+    this.error_firebaseAuth = '';
+  }
+
+  public tryAgain_forgotPasswordForm(): void {
+    this.email_forgotPassword?.setValue('');
+    this.forgotPasswordForm_submitted = false;
+    this.error_firebaseAuth = '';
   }
 
   // this method is not in forgotPasswordForm
-  public forgotPassword_success_ok() : void {
-    this.email_forgotPassword?.setValue(''); 
-    this.forgotPasswordSuccess_State = false; 
-    this.signInWithMyEmail_State = true; 
+  public forgotPassword_success_ok(): void {
+    this.email_forgotPassword?.setValue('');
+    this.forgotPasswordSuccess_State = false;
+    this.signInWithMyEmail_State = true;
   }
 
   // #endregion
 
   //#region createAccountFromGoogle_Form methods
   // show terms and conditions
-  public openModal(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      // this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  public openModal(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          // this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
-  public async createAccountFromGoogle_submit(){
-
-    this.createAccountFromGoogle_Form_submitted = true; 
+  public async createAccountFromGoogle_submit() {
+    this.createAccountFromGoogle_Form_submitted = true;
 
     if (
       this.firstName_google?.valid &&
@@ -238,49 +239,49 @@ export class AccountComponent implements OnInit, OnDestroy {
     ) {
       // form is validated
       const firstName: string = this.firstName_google?.value;
-      const lastName: string = this.lastName_google?.value; 
+      const lastName: string = this.lastName_google?.value;
       const telephone: string = this.telephone_google?.value;
-      // call firebase here 
-      this.busy = true; 
-      this.badBankService.createUserAccountWithGoogle_Authenticated_Observable(firstName,lastName,telephone).subscribe(
-        (response:any)=>{
-          try{
-            response=JSON.parse(response);
-            this.createAccountSuccess_State = true;
+      // call firebase here
+      this.busy = true;
+      this.badBankService
+        .createUserAccountWithGoogle_Authenticated_Observable(
+          firstName,
+          lastName,
+          telephone
+        )
+        .subscribe(
+          (response: any) => {
+            try {
+              response = JSON.parse(response);
+              this.createAccountSuccess_State = true;
+            } catch (error) {
+              // need to catch error here
+              this.error_State = true;
+            }
+            this.createAccountFromGoogle_State = false;
+            this.busy = false;
+          },
+          (error: any) => {
+            this.busy = false;
+            this.error_State = true;
           }
-          catch(error){
-            // need to catch error here 
-            this.error_State=true; 
-
-          }
-          this.createAccountFromGoogle_State = false;  
-          this.busy = false;
-        },
-        (error:any)=>{
-          console.log(`error = ${JSON.stringify(error)}`);
-          this.busy = false;
-          this.error_State=true; 
-
-        }); 
+        );
     }
   }
 
   public async createAccountFromGoogle_cancel() {
     this.createAccountFromGoogle_State = false;
-    this.busy=true; 
-    await signOut(this.auth); 
-    this.busy=false; 
-     
+    this.busy = true;
+    await signOut(this.auth);
+    this.busy = false;
   }
 
   // this member is not technically in createAccountFromGoogle_Form
   public signInWithGoogle_submit(): void {
-
     signInWithPopup(this.auth, new GoogleAuthProvider())
       .then(() => {})
       .catch((error) => {
-        console.log(JSON.stringify(error));
-        // please enable pop ups and try again 
+        // please enable pop ups and try again
         this.popupError_State = true;
       });
   }
@@ -299,7 +300,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.createAccountFromScratch_Form.get('email')?.valid &&
       this.createAccountFromScratch_Form.get('password')?.valid &&
       this.createAccountFromScratch_Form.get('firstName')?.valid &&
-      this.createAccountFromScratch_Form.get('lastName')?.valid && 
+      this.createAccountFromScratch_Form.get('lastName')?.valid &&
       this.createAccountFromScratch_Form.get('agree')?.valid
     ) {
       // form is validated
@@ -316,10 +317,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.busy = true;
       await createUserWithEmailAndPassword(this.auth, email, password)
         .then((userCredential: any) => {
-          console.log(`userCredential = ${JSON.stringify(userCredential)}`);
           const id_token = userCredential.user.stsTokenManager.accessToken;
-          console.log(`id_token = ${id_token}`);
-
           this.error_firebaseAuth == '';
           // call next step - set up user account
           this.badBankService
@@ -332,47 +330,33 @@ export class AccountComponent implements OnInit, OnDestroy {
             )
             .subscribe(
               (response: any) => {
-                try{
-                  response=JSON.parse(response);
+                try {
+                  response = JSON.parse(response);
                   this.createAccountSuccess_State = true;
-                }
-                catch(error){
-                  // need to catch error here
-                  this.error_State=true; 
- 
+                } catch (error) {
+                  this.error_State = true;
                 }
 
-                this.createAccountFromScratch_State = false;  
+                this.createAccountFromScratch_State = false;
                 this.busy = false;
-                
-                
               },
               (error: any) => {
-                console.log(`error = ${JSON.stringify(error)}`);
                 this.busy = false;
-                this.error_State=true; 
-
+                this.error_State = true;
               }
             );
-          // this.busy = false;
-          // this.createAccountSuccess_State = true;
         })
         .catch((error) => {
           this.busy = false;
           this.error_firebaseAuth = error.code;
-          console.log(`${error}`);
         });
     } else {
       // form is not validated
       this.createAccountFromScratch_Form_submitted = true;
     }
-
-    // console.log('clicked createAccountFromScratch');
-    // this.createAccountSuccess_State = true;
   }
 
   public createAccountFromScratch_cancel(): void {
-    console.log('clicked createAccountFromScratch_cancel');
     this.createAccountFromScratch_State = false;
   }
 
@@ -385,7 +369,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
   //#endregion
 
-  // #region signInWithEmailForm methods 
+  // #region signInWithEmailForm methods
   public signInWithEmail_submit(): void {
     this.signInWithEmailForm_submitted = true;
     this.busy = true;
@@ -401,65 +385,62 @@ export class AccountComponent implements OnInit, OnDestroy {
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
           this.signInWithMyEmail_State = false;
-          this.badBankService.getUserAccount_Authenticated_Observable().subscribe(
-            (results:any)=>{
-              try{
-                JSON.parse(results);
-                 this.busy=false; 
+          this.badBankService
+            .getUserAccount_Authenticated_Observable()
+            .subscribe(
+              (results: any) => {
+                try {
+                  JSON.parse(results);
+                  this.busy = false;
+                } catch (error) {
+                  //handle error here
+                  this.busy = false;
+                  this.error_State = true;
+                }
+              },
+              (error: any) => {
+                //handle error here
+                this.error_State = true;
               }
-              catch(error){
-                //handle error here 
-                this.busy=false;
-                this.error_State=true; 
-
-
-              }
-            },
-            (error:any)=>{
-                //handle error here 
-                this.error_State=true; 
-
-            }); 
+            );
         })
         .catch((error) => {
-          console.log('inside catch signInWithEmailAndPassword error'); 
-          console.log(error); 
           this.busy = false;
           this.error_firebaseAuth = error.code;
         });
-
     } else {
-      // form is not valid 
+      // form is not valid
       this.busy = false;
     }
 
     this.signInWithEmailForm.get('password')?.setValue('');
   }
 
-  public toggle_viewPassword_signInWithEmailForm() : void {
-    this.viewPassword_signInWithEmailForm = !this.viewPassword_signInWithEmailForm; 
+  public toggle_viewPassword_signInWithEmailForm(): void {
+    this.viewPassword_signInWithEmailForm =
+      !this.viewPassword_signInWithEmailForm;
   }
 
-  public cancel_signInWithEmailForm() : void { 
-    this.signInWithMyEmail_State = false; 
-    this.signInWithEmailForm_submitted = false; 
-    this.signInWithEmailForm.get('email')?.setValue(''); 
+  public cancel_signInWithEmailForm(): void {
+    this.signInWithMyEmail_State = false;
+    this.signInWithEmailForm_submitted = false;
+    this.signInWithEmailForm.get('email')?.setValue('');
     this.signInWithEmailForm.get('password')?.setValue('');
   }
 
-  public createNewAccount_signInWithEmailForm() : void { 
-    this.signInWithMyEmail_State = false; 
-    this.createAccountFromScratch_State = true; 
-    this.email_signInWithEmail?.setValue(''); 
+  public createNewAccount_signInWithEmailForm(): void {
+    this.signInWithMyEmail_State = false;
+    this.createAccountFromScratch_State = true;
+    this.email_signInWithEmail?.setValue('');
     this.password_signInWithEmail?.setValue('');
-    this.error_firebaseAuth='';  
-    this.signInWithEmailForm_submitted = false; 
+    this.error_firebaseAuth = '';
+    this.signInWithEmailForm_submitted = false;
   }
 
-  public tryAgain_signInWithEmailForm() : void {
-    this.signInWithEmailForm_submitted=false; 
-    this.error_firebaseAuth=''; 
-    this.email_signInWithEmail?.setValue(''); 
+  public tryAgain_signInWithEmailForm(): void {
+    this.signInWithEmailForm_submitted = false;
+    this.error_firebaseAuth = '';
+    this.email_signInWithEmail?.setValue('');
     this.password_signInWithEmail?.setValue('');
   }
   // #endregion
@@ -507,7 +488,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   get telephone_google() {
     return this.createAccountFromGoogle_Form.get('telephone');
   }
-  get agree_google(){
+  get agree_google() {
     return this.createAccountFromGoogle_Form.get('agree');
   }
 
@@ -516,7 +497,5 @@ export class AccountComponent implements OnInit, OnDestroy {
     return this.forgotPasswordForm.get('email');
   }
 
-    //#endregion
-
-  
+  //#endregion
 }

@@ -13,10 +13,9 @@ import {MatProgressSpinnerModule,MatSpinner} from '@angular/material/progress-sp
 
 import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getAuth, provideAuth,inMemoryPersistence,browserSessionPersistence } from '@angular/fire/auth';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { AccountComponent } from './account/account.component';
@@ -32,7 +31,6 @@ import { ErrorComponent } from './error/error.component';
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent,
     DepositComponent,
     WithdrawComponent,
     AccountComponent,
@@ -48,7 +46,11 @@ import { ErrorComponent } from './error/error.component';
     ReactiveFormsModule,
     HttpClientModule,
     provideFirebaseApp(()=>initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
+    provideAuth(() => {
+      const auth = getAuth(); 
+      auth.setPersistence(inMemoryPersistence);
+      return auth; 
+    }),
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     NgbModule,

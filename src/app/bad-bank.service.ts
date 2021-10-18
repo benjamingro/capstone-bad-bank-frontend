@@ -35,6 +35,8 @@ export class BadBankService implements OnDestroy {
     if (auth) {
       this.user = authState(this.auth);
       this.userDisposable = authState(this.auth).subscribe((myUser) => {
+        console.log(`inside service, myUser = `); 
+        console.log(JSON.stringify(myUser)); 
         if (myUser) {
           this.id_token = JSON.parse(
             JSON.stringify(myUser)
@@ -95,14 +97,7 @@ export class BadBankService implements OnDestroy {
 
   public getUserAccount_Authenticated_Observable() : Observable<HttpResponse<Object>> {
 
-    // console.log(`id_token = ${id_token}`); 
     console.log(`this.id_token = ${this.id_token}`); 
-    // let my_id_token : string; 
-    // this.id_token?my_id_token=this.id_token:my_id_token=id_token;
-    // let id_token? = id_token; 
-    // if(id_token == ""){
-    //   id_token = this.id_token; 
-    // }
 
     const url = `http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`;
     // const url = "http://localhost:5001/mit-xpro-319116/us-central1/authRoute";
@@ -123,6 +118,7 @@ export class BadBankService implements OnDestroy {
     return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
     .pipe(
       catchError(error =>{return of(error);}),
+
       tap((results:any)=>{
         console.log(`inside tap, results=`); 
         console.log(results); 
@@ -135,7 +131,20 @@ export class BadBankService implements OnDestroy {
           this.badBankUser = results; 
         }
          
-      })
+      }), 
+      map((results:any)=>{
+        console.log( `results = `); 
+        console.log(results);
+        if(!results.ok && typeof results.ok !== 'undefined'){
+          console.log(`inside this.http.post,not ok`); 
+          return 'sql_error'; 
+        }
+        else{
+          console.log(`inside this.http.post,looks ok`); 
+          return results;
+        }
+        
+      }),
     );
     
   }
