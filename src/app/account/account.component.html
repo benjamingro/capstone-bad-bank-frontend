@@ -296,11 +296,11 @@
                             <div class="row w-100">
                                 <!-- client side validation  -->
                                 <div class="col text-danger"
-                                    *ngIf="passwordReenter?.invalid && createAccountFromScratch_Form_submitted && passwordReenter?.errors?.required">
+                                    *ngIf="createAccountFromScratch_Form_submitted && passwordReenter?.errors?.required">
                                     Must confirm password
                                 </div>
                                 <div class="col text-danger"
-                                    *ngIf="passwordReenter?.invalid && createAccountFromScratch_Form_submitted && passwordReenter?.errors?.pattern">
+                                    *ngIf="createAccountFromScratch_Form_submitted && passwordReenter?.errors?.matching && !passwordReenter?.errors?.required ">
                                     Passwords do not match
                                 </div>
                                 <!-- server side validation  -->

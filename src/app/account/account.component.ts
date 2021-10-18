@@ -1,5 +1,10 @@
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators,AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -31,8 +36,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { BadBankService } from '../bad-bank.service';
-
-import { ConfirmedValidator } from '../confirmed.validator';
 
 @Component({
   selector: 'app-account',
@@ -79,7 +82,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   public viewPassword_signInWithEmailForm: boolean = false;
   public viewPassword_createAccountFromScratch_Form: boolean = false;
 
-
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', { validators: Validators.required }),
   });
@@ -89,15 +91,26 @@ export class AccountComponent implements OnInit, OnDestroy {
     password: new FormControl('', { validators: Validators.required }),
   });
 
-  createAccountFromScratch_Form = new FormGroup({
-    firstName: new FormControl('', { validators: Validators.required }),
-    lastName: new FormControl('', { validators: Validators.required }),
-    email: new FormControl('', { validators: Validators.required }),
-    password: new FormControl('', { validators: Validators.required }),
-    passwordReenter: new FormControl('', {validators: Validators.required}),
-    agree: new FormControl(false, { validators: Validators.requiredTrue }),
-    telephone: new FormControl(''),
-  });
+  createAccountFromScratch_Form = new FormGroup(
+    {
+      firstName: new FormControl('', { validators: Validators.required }),
+      lastName: new FormControl('', { validators: Validators.required }),
+      email: new FormControl('', { validators: Validators.required }),
+      password: new FormControl('', { validators: Validators.required }),
+      passwordReenter: new FormControl('', { validators: Validators.required }),
+      agree: new FormControl(false, { validators: Validators.requiredTrue }),
+      telephone: new FormControl(''),
+    },
+    {
+      validators: ()=>{
+        console.log(`${this.f?.password?.value}`);
+        if(this.f?.password?.value !== this.f?.passwordReenter?.value){
+          this.f?.passwordReenter?.setErrors({matching:true}); 
+        }
+        return null;
+      }
+    }
+  );
 
   createAccountFromGoogle_Form = new FormGroup({
     firstName: new FormControl('', { validators: Validators.required }),
@@ -477,6 +490,9 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
   get agree() {
     return this.createAccountFromScratch_Form.get('agree');
+  }
+  get f(): { [key: string]: AbstractControl } {
+    return this.createAccountFromScratch_Form?.controls;
   }
 
   // signInWithEmailForm
