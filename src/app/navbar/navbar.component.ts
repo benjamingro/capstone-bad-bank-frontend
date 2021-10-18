@@ -10,15 +10,9 @@ import { EMPTY, Observable, Subscription, of } from 'rxjs';
 import {
   Auth,
   authState,
-  signInAnonymously,
   signOut,
   User,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  EmailAuthProvider,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
+
 } from '@angular/fire/auth';
 
 import { faMask } from '@fortawesome/free-solid-svg-icons';
@@ -41,7 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(@Optional() private auth: Auth, private location: Location, private router:Router) {
     location.onUrlChange((url: string, state: unknown): void => {
       this.current_route = url;
-      console.log(`this.current_route = ${this.current_route}`);
+      // url: '/home', '/account', '/deposit', '/withdraw' 
     });
 
     if (auth) {

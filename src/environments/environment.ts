@@ -2,6 +2,15 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// #region replace emulator suite URLs with production URLs
+
+// const url = `http://localhost:5002/mit-xpro-319116/us-central1/createUserAccount_Authenticated`;
+// const url = `http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`;
+// const url = `http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`;
+// const url = `http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`;
+// const url = `http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`;
+
+
 export const environment = {
   production: false,
   firebase:{
@@ -12,6 +21,13 @@ export const environment = {
     messagingSenderId: "371115535761",
     appId: "1:371115535761:web:64ab84016e1a132aa23e30",
     measurementId: "G-24SNKKS4J7"
+  },
+  url:{
+    createUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/createUserAccount_Authenticated`,
+    getUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`,
+    deposit_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`,
+    withdraw_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`,
+    createGoogleUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`
   }
 };
 

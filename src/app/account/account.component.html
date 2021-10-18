@@ -581,7 +581,7 @@
                 <b>Welcome to Bad Bank</b>
             </div>
             <div class="card-body">
-                <p class="card-text">Please finish setting up your account</p>
+                <p class="card-text text-secondary">Set up your account</p>
 
                 <form class="needs-validation" novalidate [formGroup]="createAccountFromGoogle_Form"
                     (ngSubmit)="onSubmit()">
@@ -624,8 +624,8 @@
                     <div class="row w-100 mt-3 mb-2 text-secondary">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-6 align-self-center">
-                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the Terms and
-                            Conditions
+                            <input type="checkbox" formControlName="agree">&nbsp;&nbsp;I agree to the
+                            <a class="lookAlike" (click)="openModal(content)">Terms and Conditions</a>
                         </div>
                         <div class="col-sm-6"></div>
                     </div>

@@ -31,11 +31,6 @@ export class WithdrawComponent implements OnInit {
   public withdrawForm_submit(): void {
     this.busy_State = true;
     this.withdrawForm_submitted = true;
-    console.log(
-      `this.withdrawForm.get('amount')?.value = ${
-        this.withdrawForm.get('amount')?.value
-      }`
-    );
 
     if (this.withdrawForm.get('amount')?.valid) {
       // call firebase here

@@ -6,11 +6,6 @@ import {
   style,
   animate,
   transition,
-  useAnimation,
-  keyframes,
-  group,
-  AnimationStyleMetadata,
-  // ...
 } from '@angular/animations';
 
 @Component({

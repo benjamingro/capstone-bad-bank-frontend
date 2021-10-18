@@ -1,35 +1,4 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 position-fixed w-100" style="z-index:1;">
-    <!-- <div class="row w-100">
-        <div class="col">
-            <a class="navbar-brand" routerLink="/home">
-                Bad Bank&nbsp;&nbsp;<fa-icon [icon]="faMask"></fa-icon>
-            </a>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <div class="navbar-collapse " id="navbarSupportedContent" [ngClass]="navbar_menu_expand_mobile?'':'collapse'">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" routerLink="/account"
-                            [ngClass]="current_route.search('/account')>=0?'active':''" (click)="toggleNavbarMenu()">Account</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" routerLink="/deposit"
-                            [ngClass]="current_route.search('/deposit')>=0?'active':''" (click)="toggleNavbarMenu()">Deposit</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" routerLink="/withdraw"
-                            [ngClass]="current_route.search('/withdraw')>=0?'active':''"
-                            (click)="toggleNavbarMenu()">Withdraw</a></li>
-                    <li class="nav-item" *ngIf="isLoggedIn"><a class="nav-link" style="cursor:pointer;"
-                            (click)="mySignOut()">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col d-flex justify-content-end">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-            class="navbar-toggler-icon" (click)="toggleNavbarMenu()"></span></button>
-        </div>
-
-    </div> -->
-
     <a class="navbar-brand " routerLink="/home">
         Bad Bank&nbsp;&nbsp;<fa-icon [icon]="faMask" class=""></fa-icon>
     </a>

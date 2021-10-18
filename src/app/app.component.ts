@@ -46,17 +46,13 @@ export class AppComponent {
 
   constructor(private location: Location) {
     location.onUrlChange((url: string, state: unknown): void => {
-      // this.current_route = url;
-      // console.log(`this.current_route = ${this.current_route}`);
+
       if(url==="/home"){
         this.showNavbar = false; 
       }
       else{
         this.showNavbar = true; 
-        console.log(`this.animationState=${this.animationState}`); 
         this.animationState==='initial'?this.animationState='final':this.animationState='initial'; 
-        console.log(`this.animationState=${this.animationState}`); 
-
       }
     });
   }

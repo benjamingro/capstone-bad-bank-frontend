@@ -1,15 +1,10 @@
-import { AfterViewInit, Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, OnInit, HostListener, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
 import {
   trigger,
   state,
   style,
   animate,
   transition,
-  useAnimation,
-  keyframes,
-  group,
-  AnimationStyleMetadata,
-  // ...
 } from '@angular/animations';
 
 @Component({
@@ -24,7 +19,7 @@ import {
     ]),
   ]
 })
-export class BackgroundComponent implements OnInit,AfterViewInit {
+export class BackgroundComponent implements OnInit,AfterViewInit,AfterContentInit {
 
   private screenWidth?: number;
   private screenHeight?: number;
@@ -41,20 +36,18 @@ export class BackgroundComponent implements OnInit,AfterViewInit {
 
   constructor() { }
   // image size is 3000 width by 1962 height
-
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
-    console.log(`this.screenWidth = ${this.screenWidth} this.screenHeight = ${this.screenHeight}`);
     this.setBackgroundImageOffset();  
   }
 
   ngAfterViewInit() {
-    // var width = this.backgroundImage?.nativeElement.offsetWidth;
-    // var height = this.backgroundImage?.nativeElement.offsetHeight;
-    // console.log('Width:' + width);
-    // console.log('Height: ' + height);
+
     this.animationState='final'; 
+  }
+  ngAfterContentInit(){
+
   }
 
   private setBackgroundImageOffset() : void {
@@ -84,9 +77,5 @@ export class BackgroundComponent implements OnInit,AfterViewInit {
     this.screenHeight = window.innerHeight;
     this.setBackgroundImageOffset();
   }
-
-  // @ViewChild('backgroundImage')
-  // backgroundImage?: ElementRef;
-
 
 }

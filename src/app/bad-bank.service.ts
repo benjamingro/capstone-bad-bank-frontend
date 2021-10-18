@@ -10,6 +10,9 @@ import {
 
 import { BadBankUser } from './bad-bank-types'; 
 
+import { environment } from '../environments/environment';
+
+
 
 // type BadBankUser = {
 //   CustomerId:string,
@@ -41,8 +44,6 @@ export class BadBankService implements OnDestroy {
           this.id_token = JSON.parse(
             JSON.stringify(myUser)
           ).stsTokenManager.accessToken;
-
-          console.log(`inside service constructor, this.id_token = ${this.id_token}`); 
         }
       });
     }
@@ -60,7 +61,8 @@ export class BadBankService implements OnDestroy {
   public createUserAccountWithEmail_Authenticated_Observable(id_token:string, Fname:string,Lname:string,Email:string,Telephone:string) : Observable<HttpResponse<Object>> {
     // need to pass in the id_token here as a parameter during initial account setup 
 
-    const url = `http://localhost:5002/mit-xpro-319116/us-central1/createUserAccount_Authenticated`;
+    // const url = `http://localhost:5002/mit-xpro-319116/us-central1/createUserAccount_Authenticated`;
+    const url = environment.url.createGoogleUserAccount_Authenticated; 
 
     const httpOptions : Object = { 
       responseType:'text',
@@ -89,7 +91,6 @@ export class BadBankService implements OnDestroy {
           this.badBankUser = JSON.parse(results);
         }
         catch(error){
-          // this is not a good place to store error string 
           this.badBankUser = results; 
         }
          
@@ -101,9 +102,8 @@ export class BadBankService implements OnDestroy {
 
     console.log(`this.id_token = ${this.id_token}`); 
 
-    const url = `http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`;
-    // const url = "http://localhost:5001/mit-xpro-319116/us-central1/authRoute";
-        // const url = `http://localhost:5002/mit-xpro-319116/us-central1/authRoute`;
+    // const url = `http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`;
+    const url = environment.url.getUserAccount_Authenticated;
 
     const httpOptions : Object = { 
       responseType:'text',
@@ -114,35 +114,26 @@ export class BadBankService implements OnDestroy {
     }
 
     let body : string = JSON.stringify(requestObject); 
-
-    console.log(`sending body = ${body}`);
     
     return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
     .pipe(
       catchError(error =>{return of(error);}),
-
       tap((results:any)=>{
-        console.log(`inside tap, results=`); 
-        console.log(results); 
-
         try{
           this.badBankUser = JSON.parse(results);
         }
         catch(error){
           // this is not a good place to store error string 
           this.badBankUser = results; 
-        }
-         
+        } 
       }), 
       map((results:any)=>{
         console.log( `results = `); 
         console.log(results);
         if(!results.ok && typeof results.ok !== 'undefined'){
-          console.log(`inside this.http.post,not ok`); 
           return 'sql_error'; 
         }
         else{
-          console.log(`inside this.http.post,looks ok`); 
           return results;
         }
         
@@ -153,7 +144,9 @@ export class BadBankService implements OnDestroy {
 
   public deposit_Authenticated_Observable(amount:number) : Observable<HttpResponse<Object>> {
     
-    const url = `http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`;
+    // const url = `http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`;
+    const url = environment.url.deposit_Authenticated;
+
 
     const httpOptions : Object = { 
       responseType:'text',
@@ -165,23 +158,17 @@ export class BadBankService implements OnDestroy {
     }
 
     let body : string = JSON.stringify(requestObject); 
-    console.log(`sending body = ${body}`);
 
     return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
     .pipe(
       catchError(error =>{return of(error);}),
       tap((results:any)=>{
-        console.log(`inside deposit tap, results=`); 
-        console.log(results); 
-
         try{
           this.badBankUser = JSON.parse(results);
         }
         catch(error){
-          // this is not a good place to store error string 
           this.badBankUser = results; 
         }
-         
       })
     );
 
@@ -189,7 +176,8 @@ export class BadBankService implements OnDestroy {
 
   public withdraw_Authenticated_Observable(amount:number) : Observable<HttpResponse<Object>> {
     
-    const url = `http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`;
+    // const url = `http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`;
+    const url = environment.url.withdraw_Authenticated;
 
     const httpOptions : Object = { 
       responseType:'text',
@@ -207,24 +195,21 @@ export class BadBankService implements OnDestroy {
     .pipe(
       catchError(error =>{return of(error);}),
       tap((results:any)=>{
-        console.log(`inside withdraw tap, results=`); 
-        console.log(results); 
-
         try{
           this.badBankUser = JSON.parse(results);
         }
         catch(error){
-          // this is not a good place to store error string 
           this.badBankUser = results; 
         }
-         
       })
     );
 
   }
 
   public createUserAccountWithGoogle_Authenticated_Observable(Fname:string,Lname:string,Telephone:string) : Observable<HttpResponse<Object>> {
-    const url = `http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`;
+    // const url = `http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`;
+    const url = environment.url.createGoogleUserAccount_Authenticated;
+
     const httpOptions : Object = { 
       responseType:'text',
     };  
@@ -237,24 +222,17 @@ export class BadBankService implements OnDestroy {
     }
 
     let body : string = JSON.stringify(requestObject); 
-
-    console.log(`sending body = ${body}`);
     
     return this.http.post<HttpResponse<BadBankUser | string>>(url,body,httpOptions)
     .pipe(
       catchError(error =>{return of(error);}),
       tap((results:any)=>{
-        console.log(`inside google tap, results=`); 
-        console.log(results); 
-
         try{
           this.badBankUser = JSON.parse(results);
         }
         catch(error){
-          // this is not a good place to store error string 
           this.badBankUser = results; 
         }
-         
       })
     );
 

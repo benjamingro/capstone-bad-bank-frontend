@@ -16,16 +16,11 @@ import {
   User,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
-  EmailAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-  Persistence,
 } from '@angular/fire/auth';
 import { EMPTY, Observable, Subscription, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { traceUntilFirst } from '@angular/fire/performance';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -103,7 +98,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     },
     {
       validators: ()=>{
-        console.log(`${this.f?.password?.value}`);
         if(this.f?.password?.value !== this.f?.passwordReenter?.value){
           this.f?.passwordReenter?.setErrors({matching:true}); 
         }
@@ -176,7 +170,6 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   public async mySignOut() {
     return await signOut(this.auth).then(() => {
-      // this.auth.signOut();
     });
   }
 
@@ -185,7 +178,8 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.forgotPasswordForm_submitted = true;
     this.error_firebaseAuth = '';
     this.busy = true;
-    if (this.email_forgotPassword?.valid) {
+    if (this.email_forgotPassword?.valid) {  
+      
       await sendPasswordResetEmail(this.auth, this.email_forgotPassword?.value)
         .then(() => {
           // password reset successful
@@ -273,7 +267,6 @@ export class AccountComponent implements OnInit, OnDestroy {
               response = JSON.parse(response);
               this.createAccountSuccess_State = true;
             } catch (error) {
-              // need to catch error here
               this.error_State = true;
             }
             this.createAccountFromGoogle_State = false;
@@ -404,24 +397,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
           this.signInWithMyEmail_State = false;
-          // this.badBankService
-          //   .getUserAccount_Authenticated_Observable()
-          //   .subscribe(
-          //     (results: any) => {
-          //       try {
-          //         JSON.parse(results);
-          //         this.busy = false;
-          //       } catch (error) {
-          //         //handle error here
-          //         this.busy = false;
-          //         this.error_State = true;
-          //       }
-          //     },
-          //     (error: any) => {
-          //       //handle error here
-          //       this.error_State = true;
-          //     }
-          //   );
+          
         })
         .catch((error) => {
           this.busy = false;
@@ -435,10 +411,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.signInWithEmailForm.get('password')?.setValue('');
   }
 
-  // public toggle_viewPassword_signInWithEmailForm(): void {
-  //   this.viewPassword_signInWithEmailForm =
-  //     !this.viewPassword_signInWithEmailForm;
-  // }
 
   public cancel_signInWithEmailForm(): void {
     this.signInWithMyEmail_State = false;
