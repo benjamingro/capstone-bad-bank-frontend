@@ -188,10 +188,10 @@
                                     *ngIf="firstName?.invalid && createAccountFromScratch_Form_submitted">
                                     First name is required
                                 </div>
-                                <div class="col smallDisappear"
+                                <!-- <div class="col smallDisappear"
                                     *ngIf="(firstName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                                     &nbsp;
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -202,10 +202,10 @@
                                     *ngIf="lastName?.invalid && createAccountFromScratch_Form_submitted">
                                     Last name is required
                                 </div>
-                                <div class="col smallDisappear"
+                                <!-- <div class="col smallDisappear"
                                     *ngIf="(lastName?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                                     &nbsp;
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -229,19 +229,19 @@
                                     <span class="text-danger">Invalid email address.</span>
                                 </div>
                                 <!-- placeholder column -->
-                                <div class="col smallDisappear"
+                                <!-- <div class="col smallDisappear"
                                     *ngIf="(email?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                                     &nbsp;
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label class="text-secondary">Telephone</label>
                             <input type="tel" class="form-control" placeholder="(optional)" formControlName="telephone">
                             <div class="row w-100">
-                                <div class="col smallDisappear">
+                                <!-- <div class="col smallDisappear">
                                     &nbsp;
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -262,16 +262,16 @@
                                     <span class="text-danger">Password is too weak</span>
                                 </div>
                                 <!-- placeholder  -->
-                                <div class="col smallDisappear"
+                                <!-- <div class="col smallDisappear"
                                     *ngIf="(password?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                                     &nbsp;
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-sm-3"></div>
 
                     </div>
-
+                    
                     <div class="row w-100 mt-3 mb-2 text-secondary">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-6 align-self-center">
@@ -288,10 +288,10 @@
                             *ngIf="agree?.invalid && createAccountFromScratch_Form_submitted">
                             Must agree to terms and conditions
                         </div>
-                        <div class="col-sm-6 smallDisappear"
+                        <!-- <div class="col-sm-6 smallDisappear"
                             *ngIf="(agree?.valid && createAccountFromScratch_Form_submitted) || !createAccountFromScratch_Form_submitted">
                             &nbsp;
-                        </div>
+                        </div> -->
                         <div class="col-sm-3"></div>
                     </div>
 
@@ -456,7 +456,7 @@
                         <div class="col input-group">
                             <input [type]="viewPassword_signInWithEmailForm ? 'text' : 'password'" class="form-control"
                                 id="validationCustom02" placeholder="Password" formControlName="password" required>
-                            <div class="input-group-append" (click)="toggle_viewPassword_signInWithEmailForm()">
+                            <div class="input-group-append" (click)="viewPassword_signInWithEmailForm = !viewPassword_signInWithEmailForm">
                                 <span class="input-group-text">
                                     <fa-icon [icon]="faEyeSlash" style="" class=""
                                         *ngIf="viewPassword_signInWithEmailForm"></fa-icon>

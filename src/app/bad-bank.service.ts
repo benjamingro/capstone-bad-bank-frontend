@@ -41,6 +41,8 @@ export class BadBankService implements OnDestroy {
           this.id_token = JSON.parse(
             JSON.stringify(myUser)
           ).stsTokenManager.accessToken;
+
+          console.log(`inside service constructor, this.id_token = ${this.id_token}`); 
         }
       });
     }

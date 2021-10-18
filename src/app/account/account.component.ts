@@ -75,6 +75,8 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   // #region form members
   public viewPassword_signInWithEmailForm: boolean = false;
+  public viewPassword_createAccountFromScratch_Form: boolean = false;
+
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', { validators: Validators.required }),
@@ -385,24 +387,24 @@ export class AccountComponent implements OnInit, OnDestroy {
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
           this.signInWithMyEmail_State = false;
-          this.badBankService
-            .getUserAccount_Authenticated_Observable()
-            .subscribe(
-              (results: any) => {
-                try {
-                  JSON.parse(results);
-                  this.busy = false;
-                } catch (error) {
-                  //handle error here
-                  this.busy = false;
-                  this.error_State = true;
-                }
-              },
-              (error: any) => {
-                //handle error here
-                this.error_State = true;
-              }
-            );
+          // this.badBankService
+          //   .getUserAccount_Authenticated_Observable()
+          //   .subscribe(
+          //     (results: any) => {
+          //       try {
+          //         JSON.parse(results);
+          //         this.busy = false;
+          //       } catch (error) {
+          //         //handle error here
+          //         this.busy = false;
+          //         this.error_State = true;
+          //       }
+          //     },
+          //     (error: any) => {
+          //       //handle error here
+          //       this.error_State = true;
+          //     }
+          //   );
         })
         .catch((error) => {
           this.busy = false;
@@ -416,10 +418,10 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.signInWithEmailForm.get('password')?.setValue('');
   }
 
-  public toggle_viewPassword_signInWithEmailForm(): void {
-    this.viewPassword_signInWithEmailForm =
-      !this.viewPassword_signInWithEmailForm;
-  }
+  // public toggle_viewPassword_signInWithEmailForm(): void {
+  //   this.viewPassword_signInWithEmailForm =
+  //     !this.viewPassword_signInWithEmailForm;
+  // }
 
   public cancel_signInWithEmailForm(): void {
     this.signInWithMyEmail_State = false;
