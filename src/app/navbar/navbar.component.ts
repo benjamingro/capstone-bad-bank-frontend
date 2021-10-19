@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public current_route: string = '/about';
   public navbar_menu_expand_mobile: boolean = false;
   public isLoggedIn: boolean = false;
-
+  public email : string = ''; 
   constructor(
     @Optional() private auth: Auth, 
     private location: Location, 
@@ -49,12 +49,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (auth) {
       this.user = authState(this.auth);
       this.userDisposable = authState(this.auth)
-        .pipe(
-          traceUntilFirst('auth'),
-          map((u) => !!u)
-        )
-        .subscribe((isLoggedIn: boolean) => {
-          this.isLoggedIn = isLoggedIn;
+        .subscribe((myUser) => {
+          if (myUser?.uid) {
+            this.isLoggedIn = true;
+            this.email = myUser.email!;
+  
+          } else {
+            this.isLoggedIn = false;
+          }
         });
     }
   }
@@ -75,6 +77,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public async mySignOut() {
     this.toggleNavbarMenu();
-    return await signOut(this.auth).then(() => {});
+    return await signOut(this.auth).then(() => {
+      window.location.reload(); 
+    });
   }
 }

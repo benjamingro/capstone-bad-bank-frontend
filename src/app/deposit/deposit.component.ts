@@ -50,11 +50,7 @@ export class DepositComponent implements OnInit {
     }
   }
 
-  public success_ok() : void {
-    this.depositForm.setValue({amount:''});
-    this.depositSuccess_State=false; 
-    this.depositForm_submitted = false; 
-  }
+
 
   get amount_depositForm() {
     return this.depositForm.get('amount');

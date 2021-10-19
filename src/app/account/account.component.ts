@@ -134,12 +134,14 @@ export class AccountComponent implements OnInit, OnDestroy {
         if (myUser?.uid) {
           this.isLoggedIn = true;
           this.displayName = myUser.displayName!;
+
         } else {
           this.isLoggedIn = false;
         }
 
         // get user data
         if (this.isLoggedIn && !this.badBankService.badBankUser && !this.createAccountFromScratch_State) {
+          this.busy = true; 
           badBankService.getUserAccount_Authenticated_Observable().subscribe(
             (response: any) => {
               this.busy = false;
@@ -170,6 +172,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   public async mySignOut() {
     return await signOut(this.auth).then(() => {
+      window.location.reload();
     });
   }
 
@@ -290,7 +293,26 @@ export class AccountComponent implements OnInit, OnDestroy {
   // this member is not technically in createAccountFromGoogle_Form
   public signInWithGoogle_submit(): void {
     signInWithPopup(this.auth, new GoogleAuthProvider())
-      .then(() => {})
+      .then((results) => {
+        if(results.user.uid){
+          this.busy = true; 
+          this.badBankService.getUserAccount_Authenticated_Observable().subscribe(
+            (response: any) => {
+              this.busy = false;
+              if (response === 'user_not_set_up') {
+                this.createAccountFromGoogle_State = true;
+              } else if (response === 'sql_error') {
+                this.busy = false;
+                this.error_State = true;
+              }
+            },
+            (error: any) => {
+              this.busy = false;
+              this.error_State = true;
+            }
+          );
+        }
+      })
       .catch((error) => {
         // please enable pop ups and try again
         this.popupError_State = true;
@@ -399,9 +421,27 @@ export class AccountComponent implements OnInit, OnDestroy {
     ) {
       this.error_firebaseAuth = '';
       signInWithEmailAndPassword(this.auth, email, password)
-        .then(() => {
+        .then((results) => {
           this.signInWithMyEmail_State = false;
-          this.busy = false;
+          // this.busy=false; 
+          if(results.user.uid){
+            this.busy = true; 
+            this.badBankService.getUserAccount_Authenticated_Observable().subscribe(
+              (response: any) => {
+                this.busy = false;
+                if (response === 'user_not_set_up') {
+                  this.createAccountFromGoogle_State = true;
+                } else if (response === 'sql_error') {
+                  this.busy = false;
+                  this.error_State = true;
+                }
+              },
+              (error: any) => {
+                this.busy = false;
+                this.error_State = true;
+              }
+            );
+          }
 
         })
         .catch((error) => {
