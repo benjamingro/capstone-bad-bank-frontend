@@ -23,12 +23,19 @@ export const environment = {
     measurementId: "G-24SNKKS4J7"
   },
   url:{
-    createUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/createUserAccount_Authenticated`,
-    getUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`,
-    deposit_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`,
-    withdraw_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`,
-    createGoogleUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`
+    createUserAccount_Authenticated:`https://us-central1-mit-xpro-319116.cloudfunctions.net/createUserAccount_Authenticated`,
+    getUserAccount_Authenticated:`https://us-central1-mit-xpro-319116.cloudfunctions.net/getUserAccount_Authenticated`,
+    deposit_Authenticated:`https://us-central1-mit-xpro-319116.cloudfunctions.net/deposit_Authenticated`,
+    withdraw_Authenticated:`https://us-central1-mit-xpro-319116.cloudfunctions.net/withdraw_Authenticated`,
+    createGoogleUserAccount_Authenticated:`https://us-central1-mit-xpro-319116.cloudfunctions.net/createGoogleUserAccount_Authenticated`
   }
+  // url:{
+  //   createUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/createUserAccount_Authenticated`,
+  //   getUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/getUserAccount_Authenticated`,
+  //   deposit_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/deposit_Authenticated`,
+  //   withdraw_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/withdraw_Authenticated`,
+  //   createGoogleUserAccount_Authenticated:`http://localhost:5002/mit-xpro-319116/us-central1/createGoogleUserAccount_Authenticated`
+  // }
 };
 
 /*

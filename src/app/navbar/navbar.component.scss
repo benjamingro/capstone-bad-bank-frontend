@@ -1,0 +1,18 @@
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+@media (max-width: $md) {
+    .smallDisappear { 
+        display:none !important;  
+    }
+}
+
+@media (min-width: $md) {
+    .largeDisappear { 
+        display:none !important;  
+    }
+}

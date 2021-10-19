@@ -7,6 +7,9 @@ import { traceUntilFirst } from '@angular/fire/performance';
 import { map } from 'rxjs/operators';
 import { EMPTY, Observable, Subscription, of } from 'rxjs';
 
+import { BadBankService } from '../bad-bank.service';
+
+
 import {
   Auth,
   authState,
@@ -32,7 +35,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public navbar_menu_expand_mobile: boolean = false;
   public isLoggedIn: boolean = false;
 
-  constructor(@Optional() private auth: Auth, private location: Location, private router:Router) {
+  constructor(
+    @Optional() private auth: Auth, 
+    private location: Location, 
+    private router:Router,
+    public badBankService: BadBankService,
+    ) {
     location.onUrlChange((url: string, state: unknown): void => {
       this.current_route = url;
       // url: '/home', '/account', '/deposit', '/withdraw' 

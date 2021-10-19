@@ -139,7 +139,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         }
 
         // get user data
-        if (this.isLoggedIn && !this.badBankService.badBankUser) {
+        if (this.isLoggedIn && !this.badBankService.badBankUser && !this.createAccountFromScratch_State) {
           badBankService.getUserAccount_Authenticated_Observable().subscribe(
             (response: any) => {
               this.busy = false;
@@ -344,13 +344,17 @@ export class AccountComponent implements OnInit, OnDestroy {
               (response: any) => {
                 try {
                   response = JSON.parse(response);
+                  this.badBankService.badBankUser = response; 
                   this.createAccountSuccess_State = true;
+                  this.busy = false;
                 } catch (error) {
                   this.error_State = true;
+                  this.busy = false;
+
                 }
 
                 this.createAccountFromScratch_State = false;
-                this.busy = false;
+                // this.busy = false;
               },
               (error: any) => {
                 this.busy = false;
@@ -397,7 +401,8 @@ export class AccountComponent implements OnInit, OnDestroy {
       signInWithEmailAndPassword(this.auth, email, password)
         .then(() => {
           this.signInWithMyEmail_State = false;
-          
+          this.busy = false;
+
         })
         .catch((error) => {
           this.busy = false;
