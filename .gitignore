@@ -50,3 +50,6 @@ Thumbs.db
 package.json
 package-lock.json
 .firebase/
+
+environment.ts
+environment.prod.ts
