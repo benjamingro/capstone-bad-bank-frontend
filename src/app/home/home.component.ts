@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit,AfterViewInit,AfterContentInit {
   public animationState : string = 'initial';
 
   constructor() {
-    // console.log(`animationState=${this.animationState}`); 
    }
 
   ngOnInit(): void {
@@ -35,20 +34,17 @@ export class HomeComponent implements OnInit,AfterViewInit,AfterContentInit {
       this.animationState="final"; 
       console.log(`animationState=${this.animationState}`);
     },1000)
-    // this.animationState="final"; 
-    // console.log(`animationState=${this.animationState}`); 
+
 
   }
 
   ngAfterViewInit():void{
-    // this.animationState='final'; 
-    // console.log(`animationState=${this.animationState}`); 
+
 
   }
 
   ngAfterContentInit():void{
-    // this.animationState='final'; 
-    // console.log(`animationState=${this.animationState}`); 
+ 
   }
   
 

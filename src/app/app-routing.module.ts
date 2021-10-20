@@ -15,6 +15,8 @@ const routes: Routes = [
   { path: 'deposit', component: DepositComponent, canActivate:[AuthGuard]  },
   { path: 'withdraw', component: WithdrawComponent, canActivate:[AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'Ben-GrossFullStackBankingApplication', redirectTo: '/home', pathMatch: 'full' },
+
   { path: "**", component: HomeComponent  }
 ];
 
