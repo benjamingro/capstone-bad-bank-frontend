@@ -6,12 +6,11 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import {
   Auth,
   authState,
-  signInAnonymously,
   signOut,
   User,
   GoogleAuthProvider,
