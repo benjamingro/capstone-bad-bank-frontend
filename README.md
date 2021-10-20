@@ -4,7 +4,7 @@
 ### Introduction
 This the front-end part of a Bad Bank project completed in fulfillment of the MIT xPRO Professional Certificate Full Stack Engineering course. It uses the following component architecture. 
 
-<img src="README_images/Image2.png" alt="drawing" width="400"/>
+<img src="README_images/Image3.png" alt="drawing" width="400"/>
 
 ### Develop
 
