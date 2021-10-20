@@ -2,13 +2,7 @@ import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
-
-import { traceUntilFirst } from '@angular/fire/performance';
-import { map } from 'rxjs/operators';
 import { EMPTY, Observable, Subscription, of } from 'rxjs';
-
-import { BadBankService } from '../bad-bank.service';
-
 
 import {
   Auth,
@@ -39,7 +33,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     @Optional() private auth: Auth, 
     private location: Location, 
     private router:Router,
-    public badBankService: BadBankService,
     ) {
     location.onUrlChange((url: string, state: unknown): void => {
       this.current_route = url;
